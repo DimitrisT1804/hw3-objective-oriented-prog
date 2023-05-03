@@ -9,6 +9,8 @@ public class hw3_main
 		array = new char[7][6];
 		int a, b;
 		
+		String whoPlays = new String("player");
+		
 		for(int i = 0; i < 7; i++)
 		{
 			for(int j = 0; j < 6; j++)
@@ -24,38 +26,93 @@ public class hw3_main
 			if(a > 6)
 				break;
 			
-			for(int i = 5; i >= 0; i--)
+			switch (whoPlays)
 			{
-				if(array[a][i] != 'X')
+				case "player":
 				{
-					array[a][i] = 'X';
+					for(int i = 5; i >= 0; i--)
+					{
+						if(array[a][i] != 'X' && array[a][i] != 'O' )
+						{
+							array[a][i] = 'X';
+							break;
+						}
+					}
+					
+					//esto oti O einai ta poulia tou AI kai X tou paikti
+					System.out.println("Player");
+					for (int i = 0; i < 6; i++)
+					{
+						for (int j = 0; j < 7; j++)
+						{
+							System.out.print("| " + array[j][i] + " ");
+						}
+						System.out.println("|");
+						System.out.println("-----------------------------");
+					}
+					whoPlays = "AI";
+					
 					break;
 				}
-			}
-			
-			//while(true)
-			//{			
-			//esto oti 1 einai ta poulia tou AI kai 2 tou paikti
-			
-			for (int i = 0; i < 6; i++)
-			{
-				for (int j = 0; j < 7; j++)
-				{
-					System.out.print("| " + array[j][i] + " ");
+					
+					case "AI":
+					{
+						for(int i = 5; i >= 0; i--)
+						{
+							if(array[a][i] != 'O' && array[a][i] != 'X')
+							{
+								array[a][i] = 'O';
+								break;
+							}
+						}
+						
+						System.out.println("AI");
+						//esto oti O einai ta poulia tou AI kai X tou paikti
+						
+						for (int i = 0; i < 6; i++)
+						{
+							for (int j = 0; j < 7; j++)
+							{
+								System.out.print("| " + array[j][i] + " ");
+							}
+							System.out.println("|");
+							System.out.println("-----------------------------");
+						}
+						whoPlays = "player";
+						
+						break;
+					}
+					
+					default:
+					{
+						break;
+					}
 				}
-				System.out.println("|");
-				System.out.println("-----------------------------");
+					
 			}
-			//}
 			
 			
-//		for(int i = 0; i < 7; i++)
-//		{
-//			for(int j = 0; j < 6; j++)
+			
+//			for(int i = 5; i >= 0; i--)
 //			{
-//				System.out.println(array[i][j]);
+//				if(array[a][i] != 'X')
+//				{
+//					array[a][i] = 'X';
+//					break;
+//				}
 //			}
-//		}
+//			
+//			//esto oti O einai ta poulia tou AI kai X tou paikti
+//			
+//			for (int i = 0; i < 6; i++)
+//			{
+//				for (int j = 0; j < 7; j++)
+//				{
+//					System.out.print("| " + array[j][i] + " ");
+//				}
+//				System.out.println("|");
+//				System.out.println("-----------------------------");
+//			}						
 		}
 	}
-}
+
