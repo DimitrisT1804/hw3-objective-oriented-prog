@@ -17,13 +17,24 @@ public class hw3_main
 			}
 		}
 		
-		Scanner sc = new Scanner(System.in);
-		a = sc.nextInt();
-		b = sc.nextInt();
-		
-		array[a][b] = 'X';
-		//while(true)
-		//{			
+		while(true)
+		{		
+			Scanner sc = new Scanner(System.in);
+			a = sc.nextInt();
+			if(a > 6)
+				break;
+			
+			for(int i = 5; i >= 0; i--)
+			{
+				if(array[a][i] != 'X')
+				{
+					array[a][i] = 'X';
+					break;
+				}
+			}
+			
+			//while(true)
+			//{			
 			//esto oti 1 einai ta poulia tou AI kai 2 tou paikti
 			
 			for (int i = 0; i < 6; i++)
@@ -35,9 +46,9 @@ public class hw3_main
 				System.out.println("|");
 				System.out.println("-----------------------------");
 			}
-		//}
-		
-		
+			//}
+			
+			
 //		for(int i = 0; i < 7; i++)
 //		{
 //			for(int j = 0; j < 6; j++)
@@ -45,5 +56,6 @@ public class hw3_main
 //				System.out.println(array[i][j]);
 //			}
 //		}
+		}
 	}
 }
