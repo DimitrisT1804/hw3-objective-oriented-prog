@@ -13,6 +13,8 @@ public class hw3_main
 		
 		canvas kati = new canvas(); 	// dokimi gia tin klasi tou pinaka
 		//kati.evaluate();
+		Tree newTree = new Tree(3);
+		System.out.println(newTree.toDOTString());
 
 		
 		while(true)
