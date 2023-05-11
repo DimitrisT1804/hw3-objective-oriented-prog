@@ -62,9 +62,9 @@ public class canvas
 				for (int j = i; j < i+4; j++)
 				{
 					
-					if(array[j][k] == 'X')
+					if(array[j][k] == 'O')
 						yellows = yellows + 1;
-					else if (array[j][k] == 'O')
+					else if (array[j][k] == 'X')
 						red = red + 1;
 					
 					System.out.print(array[j][k]);
@@ -96,9 +96,9 @@ public class canvas
 				for (int j = i; j < i+4; j++)
 				{
 					
-					if(array[k][j] == 'X')
+					if(array[k][j] == 'O')
 						yellows = yellows + 1;
-					else if (array[k][j] == 'O')
+					else if (array[k][j] == 'X')
 						red = red + 1;
 					
 					System.out.print(array[k][j]);
@@ -188,15 +188,15 @@ public class canvas
 		}
 		array[a][pos] = ' ';
 		
-		for (int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < 7; j++)
-			{
-				System.out.print("| " + array[j][i] + " ");
-			}
-			System.out.println("|");
-			System.out.println("-----------------------------");
-		}
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
 	}
 	
 }

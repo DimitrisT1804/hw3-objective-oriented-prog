@@ -16,13 +16,14 @@ public class hw3_main
 		String whoPlays = new String("player");
 		
 		canvas kati = new canvas(); 	// dokimi gia tin klasi tou pinaka
+		canvas newCanvas = new canvas();
 //		kati.evaluate();
-		Tree newTree = new Tree(3);
-//		System.out.println(newTree.toDOTString());
+		Tree newTree = new Tree(5);
+		System.out.println(newTree.toDOTString());
 //		
-//		String Filepath = ("C:/Users/jimar/Desktop/Uni/6th semester/Objective Programming/hw3-objective-oriented-prog/test.txt");
+		String Filepath = ("/home/dimitris/Desktop/Objective Programming/hw3-objective-oriented-prog/test.dot");
 //		
-//		file = new File(Filepath);
+		file = new File(Filepath);
 //		try {
 //			newTree.toFile(file);
 //		} catch (TreeExceptions e) {
@@ -32,6 +33,16 @@ public class hw3_main
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
+		try {
+		newTree.toDotFile(file);
+	} catch (TreeExceptions e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 
 		
 		while(true)
@@ -56,12 +67,43 @@ public class hw3_main
 					
 				case "AI":
 				{
-					kati.insertAI(a);
-					kati.removeMove(a);
+					newCanvas = kati;
+					newCanvas = newTree.addEvaluation(newTree.root, newCanvas, kati);
+					
+					//kati.insertAI(a);
+					//kati.removeMove(a);
 					whoPlays = "player";
+//					for (int i = 0; i < 6; i++)
+//					{
+//						for (int j = 0; j < 7; j++)
+//						{
+//							System.out.print("| " + newCanvas.array[j][i] + " ");
+//						}
+//						System.out.println("|");
+//						System.out.println("-----------------------------");
+//					}
+					newTree.minMax();
+					newTree.isMinMax = true;
+					ArrayList<Integer> optPath = new ArrayList<Integer>(0);
+					optPath = newTree.optimalPath();
+					
+					b = optPath.get(optPath.size() - 1);
+					System.out.println("Correct move is: "+b);
+					kati.insertAI(b);
+					
 					
 					//evaluationValue = kati.evaluate(evaluationValue);
 					//System.out.println("The values is " + evaluationValue);
+					
+//					try {
+//						newTree.toDotFile(file);
+//					} catch (TreeExceptions e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 					
 					break;
 				}

@@ -29,7 +29,7 @@ public class Tree
 		MaximizerNode newMaximizer = null;
 		boolean checkMaximizer = false;		
 		
-		if(depth == 0)
+		if(depth == -1)
 			return null;
 		else
 		{
@@ -41,31 +41,42 @@ public class Tree
 				checkMaximizer = true;
 		}
 		
-		if(isMaximizer)
+		if(depth == 0)
 		{
-			newMinimizer = new MinimizerNode();
-			newMinimizer.SetValue(random.nextDouble());
-			newMinimizer.setChildrenSize(7);
-			
-			for(int i = 0; i < 7; i++)
+			TreeLeaves newNode = new TreeLeaves();
+			//newNode.SetValue(random.nextInt(10));
+			return newNode;
+		}
+		else
+		{		
+			if(!isMaximizer)
 			{
-				newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
+				newMinimizer = new MinimizerNode();
+				//newMinimizer.SetValue(random.nextInt(10));
+				newMinimizer.setChildrenSize(7);
+				
+				for(int i = 0; i < 7; i++)
+				{
+					newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
+				}
+				return newMinimizer;
 			}
-			return newMinimizer;
+			
+			
+			else
+			{
+				newMaximizer = new MaximizerNode();
+				//newMaximizer.SetValue(random.nextInt(10));
+				newMaximizer.setChildrenSize(7);
+				
+				for(int i = 0; i< 7; i++)
+				{
+					newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
+				}
+				return newMaximizer;
+			}
 		}
 		
-		else
-		{
-			newMaximizer = new MaximizerNode();
-			newMaximizer.SetValue(random.nextDouble());
-			newMaximizer.setChildrenSize(7);
-			
-			for(int i = 0; i< 7; i++)
-			{
-				newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
-			}
-			return newMaximizer;
-		}
 		
 
 		
@@ -225,12 +236,14 @@ public class Tree
 	
 	
 	// na kano kapos anadromika na ftanei sta fila kai ekei na trexei tis 7 periptoseis kai paralila na exo ena copy tou canva kai na kano tis kiniseis mexri ekei
-	public void addEvaluation(TreeLeaves node)
+	public canvas addEvaluation(TreeLeaves node, canvas newCanvas, canvas currentCanvas)
 	{
 		MaximizerNode Maximizer;
 		MinimizerNode Minimizer;
+		int pos = 0;
+		
 		if(node == null)
-			return;
+			return currentCanvas;
 		
 		if (node instanceof MaximizerNode)
 		{			
@@ -238,7 +251,10 @@ public class Tree
 			for (int i = 0; i < 7; i++)
 			{
 				// play i;
-				addEvaluation(Maximizer.ChildrenArray[i]);
+				newCanvas.insertAI(i);
+				pos = i;
+				addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas);
+				//newCanvas.removeMove(i);
 			}
 		} 
 		
@@ -248,14 +264,24 @@ public class Tree
 			for (int i = 0; i < 7; i++)
 			{
 				// play i;
-				addEvaluation(Minimizer.ChildrenArray[i]);
+				newCanvas.insertPlayer(i);
+				pos = i;
+				addEvaluation(Minimizer.ChildrenArray[i], newCanvas, currentCanvas);
+				//newCanvas.removeMove(i);
 			}
 		}
 		
 		else
 		{
 			// eimaste se filo
+			int evaluationValue = 0;
+			node.SetValue(newCanvas.evaluate(evaluationValue) );
+			System.out.println(node.getValue());
+			newCanvas.removeMove(pos);
+			newCanvas = currentCanvas;
 		}
+		return currentCanvas;
+		//newCanvas.removeMove(pos);
 		
 	}
 	
