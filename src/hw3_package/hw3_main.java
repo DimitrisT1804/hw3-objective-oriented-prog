@@ -1,4 +1,6 @@
 package hw3_package;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class hw3_main 
@@ -8,13 +10,28 @@ public class hw3_main
 		char array[][];
 		//array = new char[7][6];
 		int a, b;
+		File file;
+		int evaluationValue = 0;
 		
 		String whoPlays = new String("player");
 		
 		canvas kati = new canvas(); 	// dokimi gia tin klasi tou pinaka
-		//kati.evaluate();
+//		kati.evaluate();
 		Tree newTree = new Tree(3);
-		System.out.println(newTree.toDOTString());
+//		System.out.println(newTree.toDOTString());
+//		
+//		String Filepath = ("C:/Users/jimar/Desktop/Uni/6th semester/Objective Programming/hw3-objective-oriented-prog/test.txt");
+//		
+//		file = new File(Filepath);
+//		try {
+//			newTree.toFile(file);
+//		} catch (TreeExceptions e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		
 		while(true)
@@ -31,7 +48,8 @@ public class hw3_main
 					kati.insertPlayer(a);
 					whoPlays = "AI";
 					
-					kati.evaluate();
+					//evaluationValue = kati.evaluate(evaluationValue);
+					//System.out.println("The values is " + evaluationValue);
 					
 					break;
 				}
@@ -39,20 +57,26 @@ public class hw3_main
 				case "AI":
 				{
 					kati.insertAI(a);
+					kati.removeMove(a);
 					whoPlays = "player";
 					
-					kati.evaluate();
+					//evaluationValue = kati.evaluate(evaluationValue);
+					//System.out.println("The values is " + evaluationValue);
 					
 					break;
 				}
 				
 				default:
 				{
+					//kati.evaluate(evaluationValue);
 					break;
 				}
 			}
 					
 		}
+		
+		evaluationValue = kati.evaluate(evaluationValue);
+		System.out.println("The values is " + evaluationValue);
 		
 		
 		

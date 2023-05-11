@@ -27,9 +27,7 @@ public class Tree
 		//root = newNode;
 		MinimizerNode newMinimizer = null;
 		MaximizerNode newMaximizer = null;
-		boolean checkMaximizer = false;
-		TreeLeaves newNode;
-		
+		boolean checkMaximizer = false;		
 		
 		if(depth == 0)
 			return null;
@@ -68,6 +66,7 @@ public class Tree
 			}
 			return newMaximizer;
 		}
+		
 
 		
 //		for(int i = 0; i < 7; i++)
@@ -221,6 +220,47 @@ public class Tree
 		}
 		
 	}
+	
+	
+	
+	
+	// na kano kapos anadromika na ftanei sta fila kai ekei na trexei tis 7 periptoseis kai paralila na exo ena copy tou canva kai na kano tis kiniseis mexri ekei
+	public void addEvaluation(TreeLeaves node)
+	{
+		MaximizerNode Maximizer;
+		MinimizerNode Minimizer;
+		if(node == null)
+			return;
+		
+		if (node instanceof MaximizerNode)
+		{			
+			Maximizer = (MaximizerNode) node;
+			for (int i = 0; i < 7; i++)
+			{
+				// play i;
+				addEvaluation(Maximizer.ChildrenArray[i]);
+			}
+		} 
+		
+		else if (node instanceof MinimizerNode)
+		{			
+			Minimizer = (MinimizerNode) node;
+			for (int i = 0; i < 7; i++)
+			{
+				// play i;
+				addEvaluation(Minimizer.ChildrenArray[i]);
+			}
+		}
+		
+		else
+		{
+			// eimaste se filo
+		}
+		
+	}
+	
+	
+	
 	
 	
 	/* Postorder Traversal for Checking the construction of the Tree */

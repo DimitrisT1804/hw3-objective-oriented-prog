@@ -1,0 +1,628 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        }
+      ],
+      "type": "max"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        }
+      ],
+      "type": "max"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        }
+      ],
+      "type": "max"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        }
+      ],
+      "type": "max"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        }
+      ],
+      "type": "max"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        }
+      ],
+      "type": "max"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        },
+        {
+          "children": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "type": "min"
+        }
+      ],
+      "type": "max"
+    }
+  ],
+  "type": "min"
+}

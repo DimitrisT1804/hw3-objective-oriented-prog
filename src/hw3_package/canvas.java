@@ -16,12 +16,15 @@ public class canvas
 		}
 	}
 	
-	public void evaluate()
+	public int evaluate(int evaluationValue)
 	{
 		char [] array_1 = new char[4];
 		char [] array_2 = new char[4];
 		char [] array_3 = new char[4];
 		char [] array_4 = new char[4];
+		
+		int yellows = 0, red = 0;
+		//int evaluationValue = 0;
 
 		
 		array_1[0] = array[0][0];
@@ -50,6 +53,77 @@ public class canvas
 		//{
 			System.out.println(array_4);
 		//}
+			
+		// new try
+		for(int k = 5; k >= 0; k--)
+		{	
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = i; j < i+4; j++)
+				{
+					
+					if(array[j][k] == 'X')
+						yellows = yellows + 1;
+					else if (array[j][k] == 'O')
+						red = red + 1;
+					
+					System.out.print(array[j][k]);
+					
+				}
+				if(yellows != 0 && red != 0)
+					System.out.println("There is red and yellow on line");
+				else if (yellows == 0 && red == 0)
+					System.out.println("Only empty on line");
+				else if (yellows == 1)
+					evaluationValue = evaluationValue + 1;
+				else if (yellows == 2)
+					evaluationValue = evaluationValue + 4;
+				else if (yellows == 3)
+					evaluationValue = evaluationValue + 16;
+				
+				
+				//System.out.println(evaluationValue);
+				yellows = 0;
+				red = 0;
+			}
+		}
+		
+		// katakorifa
+		for(int k = 6; k >= 0; k--)
+		{	
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = i; j < i+4; j++)
+				{
+					
+					if(array[k][j] == 'X')
+						yellows = yellows + 1;
+					else if (array[k][j] == 'O')
+						red = red + 1;
+					
+					System.out.print(array[k][j]);
+					
+				}
+				if(yellows != 0 && red != 0)
+					System.out.println("There is red and yellow on line");
+				else if (yellows == 0 && red == 0)
+					System.out.println("Only empty on line");
+				else if (yellows == 1)
+					evaluationValue = evaluationValue + 1;
+				else if (yellows == 2)
+					evaluationValue = evaluationValue + 4;
+				else if (yellows == 3)
+					evaluationValue = evaluationValue + 16;
+				
+				
+				//System.out.println(evaluationValue);
+				yellows = 0;
+				red = 0;
+			}
+		}
+		
+		
+		return evaluationValue;
 	}
 	
 	public void insertPlayer(int a)
@@ -89,6 +163,30 @@ public class canvas
 		
 		System.out.println("AI");
 		//esto oti O einai ta poulia tou AI kai X tou paikti
+		
+		for (int i = 0; i < 6; i++)
+		{
+			for (int j = 0; j < 7; j++)
+			{
+				System.out.print("| " + array[j][i] + " ");
+			}
+			System.out.println("|");
+			System.out.println("-----------------------------");
+		}
+	}
+	
+	public void removeMove(int a)
+	{
+		int pos = 0;
+		for(int i = 5; i >= 0; i--)
+		{
+			if(array[a][i] == ' ');
+			{
+				pos = i;
+				break;
+			}
+		}
+		array[a][pos] = ' ';
 		
 		for (int i = 0; i < 6; i++)
 		{
