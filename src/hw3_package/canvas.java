@@ -17,41 +17,16 @@ public class canvas
 	}
 	
 	public int evaluate(int evaluationValue)
-	{
-		char [] array_1 = new char[4];
-		char [] array_2 = new char[4];
-		char [] array_3 = new char[4];
-		char [] array_4 = new char[4];
-		
+	{	
 		int yellows = 0, red = 0;
 		//int evaluationValue = 0;
 
-		
-		array_1[0] = array[0][0];
-		array_1[1] = array[1][0];
-		array_1[2] = array[2][0];
-		array_1[3] = array[3][0];
-		
-		array_2[0] = array[1][0];
-		array_2[1] = array[2][0];
-		array_2[2] = array[3][0];
-		array_2[3] = array[4][0];
-		
-		array_3[0] = array[2][0];
-		array_3[1] = array[3][0];
-		array_3[2] = array[4][0];
-		array_3[3] = array[5][0];
-		
-		array_4[0] = array[3][0];
-		array_4[1] = array[4][0];
-		array_4[2] = array[5][0];
-		array_4[3] = array[6][0];
 		
 		
 		
 		//for(int j = 0; j < 4; j++)
 		//{
-			System.out.println(array_4);
+			//System.out.println(array_4);
 		//}
 			
 		// new try
@@ -67,19 +42,49 @@ public class canvas
 					else if (array[j][k] == 'X')
 						red = red + 1;
 					
-					System.out.print(array[j][k]);
+					//System.out.print(array[j][k]);
 					
 				}
 				if(yellows != 0 && red != 0)
-					System.out.println("There is red and yellow on line");
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+					//System.out.println("There is red and yellow on line");
 				else if (yellows == 0 && red == 0)
-					System.out.println("Only empty on line");
-				else if (yellows == 1)
-					evaluationValue = evaluationValue + 1;
-				else if (yellows == 2)
-					evaluationValue = evaluationValue + 4;
-				else if (yellows == 3)
-					evaluationValue = evaluationValue + 16;
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+				else
+				{					
+					if(red == 4 && yellows == 4)
+						evaluationValue = evaluationValue + 2000;
+					else
+					{											
+						if (yellows == 1)
+							evaluationValue = evaluationValue + 1;
+						else if (yellows == 2)
+							evaluationValue = evaluationValue + 4;
+						else if (yellows == 3)
+							evaluationValue = evaluationValue + 16;
+						else if (yellows == 4)
+							evaluationValue = evaluationValue + 1000;
+						
+						if (red == 1)
+							evaluationValue = evaluationValue - 1;
+						else if (red == 2)
+							evaluationValue = evaluationValue - 4;
+						else if (red == 3)
+							evaluationValue = evaluationValue - 16;
+						else if (red == 4)
+							evaluationValue = evaluationValue - 1000;
+					}
+					
+				}
+					//System.out.println("Only empty on line");
 				
 				
 				//System.out.println(evaluationValue);
@@ -101,19 +106,44 @@ public class canvas
 					else if (array[k][j] == 'X')
 						red = red + 1;
 					
-					System.out.print(array[k][j]);
+					//System.out.print(array[k][j]);
 					
 				}
+				
 				if(yellows != 0 && red != 0)
-					System.out.println("There is red and yellow on line");
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+					//System.out.println("There is red and yellow on line");
 				else if (yellows == 0 && red == 0)
-					System.out.println("Only empty on line");
-				else if (yellows == 1)
-					evaluationValue = evaluationValue + 1;
-				else if (yellows == 2)
-					evaluationValue = evaluationValue + 4;
-				else if (yellows == 3)
-					evaluationValue = evaluationValue + 16;
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+				else
+				{											
+					if (yellows == 1)
+						evaluationValue = evaluationValue + 1;
+					else if (yellows == 2)
+						evaluationValue = evaluationValue + 4;
+					else if (yellows == 3)
+						evaluationValue = evaluationValue + 16;
+					else if (yellows == 4)
+						evaluationValue = evaluationValue + 1000;
+					
+					if (red == 1)
+						evaluationValue = evaluationValue - 1;
+					else if (red == 2)
+						evaluationValue = evaluationValue - 4;
+					else if (red == 3)
+						evaluationValue = evaluationValue - 16;
+					else if (red == 4)
+						evaluationValue = evaluationValue - 1000;
+				}
+					//System.out.println("Only empty on line");
 				
 				
 				//System.out.println(evaluationValue);
@@ -122,7 +152,120 @@ public class canvas
 			}
 		}
 		
+		for(int k = 0; k < 3; k++) 
+		{	
+		    // Check diagonals starting from the top row
+		    for (int i = 0; i < 4; i++) 
+		    {
+		        for (int j = 0; j < 4; j++)
+		        {
+		            int row = k + j;
+		            int col = i + j;
+		            if(row < 7 && col < 6)
+		            {		            	
+		            	if (array[row][col] == 'O')
+		            		yellows++;
+		            	else if (array[row][col] == 'X')
+		            		red++;
+		            }
+		        }
+				if(yellows != 0 && red != 0)
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+					//System.out.println("There is red and yellow on line");
+				else if (yellows == 0 && red == 0)
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+				else
+				{										
+					if (yellows == 1)
+						evaluationValue = evaluationValue + 1;
+					else if (yellows == 2)
+						evaluationValue = evaluationValue + 4;
+					else if (yellows == 3)
+						evaluationValue = evaluationValue + 16;
+					else if (yellows == 4)
+						evaluationValue = evaluationValue + 1000;
+					
+					if (red == 1)
+						evaluationValue = evaluationValue - 1;
+					else if (red == 2)
+						evaluationValue = evaluationValue - 4;
+					else if (red == 3)
+						evaluationValue = evaluationValue - 16;
+					else if (red == 4)
+						evaluationValue = evaluationValue - 1000;
+				}
+				yellows = 0;
+				red = 0;
+		    }
+		}
 		
+		for(int k = 3; k < 6; k++) 
+		{	
+		    // Check diagonals starting from the bottom row
+		    for (int i = 3; i < 7; i++) 
+		    {
+		        for (int j = 0; j < 4; j++)
+		        {
+		            int row = k - j;
+		            int col = i - j;
+		            if(row < 7 && col < 6)
+		            {		            	
+		            	if (array[row][col] == 'O')
+		            		yellows++;
+		            	else if (array[row][col] == 'X')
+		            		red++;
+		            }
+		        }
+				if(yellows != 0 && red != 0)
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+					//System.out.println("There is red and yellow on line");
+				else if (yellows == 0 && red == 0)
+				{
+					yellows = 0;
+					red = 0;
+					break;
+				}
+				else
+				{					
+				
+					if (yellows == 1)
+						evaluationValue = evaluationValue + 1;
+					else if (yellows == 2)
+						evaluationValue = evaluationValue + 4;
+					else if (yellows == 3)
+						evaluationValue = evaluationValue + 16;
+					else if (yellows == 4)
+						evaluationValue = evaluationValue + 1000;
+					
+					if (red == 1)
+						evaluationValue = evaluationValue - 1;
+					else if (red == 2)
+						evaluationValue = evaluationValue - 4;
+					else if (red == 3)
+						evaluationValue = evaluationValue - 16;
+					else if (red == 4)
+						evaluationValue = evaluationValue - 1000;
+					
+				}
+				yellows = 0;
+				red = 0;
+		    }
+		}
+		        
+		
+		//System.out.println("The value clear is: " + evaluationValue);
 		return evaluationValue;
 	}
 	
@@ -138,16 +281,16 @@ public class canvas
 		}
 		
 		//esto oti O einai ta poulia tou AI kai X tou paikti
-		System.out.println("Player");
-		for (int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < 7; j++)
-			{
-				System.out.print("| " + array[j][i] + " ");
-			}
-			System.out.println("|");
-			System.out.println("-----------------------------");
-		}
+		//System.out.println("Player");
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
 	}
 	
 	public void insertAI(int a)
@@ -161,32 +304,8 @@ public class canvas
 			}
 		}
 		
-		System.out.println("AI");
+		//System.out.println("AI");
 		//esto oti O einai ta poulia tou AI kai X tou paikti
-		
-		for (int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < 7; j++)
-			{
-				System.out.print("| " + array[j][i] + " ");
-			}
-			System.out.println("|");
-			System.out.println("-----------------------------");
-		}
-	}
-	
-	public void removeMove(int a)
-	{
-		int pos = 0;
-		for(int i = 5; i >= 0; i--)
-		{
-			if(array[a][i] == ' ');
-			{
-				pos = i;
-				break;
-			}
-		}
-		array[a][pos] = ' ';
 		
 //		for (int i = 0; i < 6; i++)
 //		{
@@ -197,6 +316,66 @@ public class canvas
 //			System.out.println("|");
 //			System.out.println("-----------------------------");
 //		}
+	}
+	
+	public void removeMove(int a)
+	{
+		int pos = 0, i;
+		for(i = 5; i >= 0; i--)
+		{
+			pos = i;
+			if(array[a][i] == ' ')
+			{
+				//System.out.println(array[a][i]);
+				pos = i;
+				break;
+			}
+		}
+//		if (pos == 5)
+//		{
+//			array[a][pos] = ' ';
+//		}
+//		else if(pos != 0)
+//			array[a][pos+1] = ' ';
+//		else
+//			array[a][pos] = ' ';
+		if(i == -1)
+			array[a][0] = ' ';
+		else
+			array[a][pos+1] = ' ';
+		
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
+	}
+	
+	public boolean isValid(int a)
+	{
+		int i;
+		for(i = 5; i >= 0; i--)
+		{
+			if(array[a][i] != 'O' && array[a][i] != 'X')
+			{
+				//array[a][i] = 'O';
+				break;
+			}
+		}
+		
+		if (i >= 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+			
 	}
 	
 }

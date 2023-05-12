@@ -17,6 +17,11 @@ public class TreeAdvanced extends Tree		// Advanced Tree that implements the Min
 		super(JSONFile);
 	}
 	
+	public TreeAdvanced(int depth)
+	{
+		super(depth);
+	}
+	
 	
 	// ArrayList that stores the pruned nodes
 	ArrayList<TreeLeaves> prunedNode = new ArrayList<TreeLeaves>();

@@ -236,14 +236,14 @@ public class Tree
 	
 	
 	// na kano kapos anadromika na ftanei sta fila kai ekei na trexei tis 7 periptoseis kai paralila na exo ena copy tou canva kai na kano tis kiniseis mexri ekei
-	public canvas addEvaluation(TreeLeaves node, canvas newCanvas, canvas currentCanvas)
+	public void addEvaluation(TreeLeaves node, canvas newCanvas, canvas currentCanvas)
 	{
 		MaximizerNode Maximizer;
 		MinimizerNode Minimizer;
 		int pos = 0;
 		
 		if(node == null)
-			return currentCanvas;
+			return;
 		
 		if (node instanceof MaximizerNode)
 		{			
@@ -251,10 +251,13 @@ public class Tree
 			for (int i = 0; i < 7; i++)
 			{
 				// play i;
-				newCanvas.insertAI(i);
-				pos = i;
-				addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas);
-				//newCanvas.removeMove(i);
+				if(newCanvas.isValid(i))
+				{					
+					newCanvas.insertAI(i);
+					pos = i;
+					addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas);
+					newCanvas.removeMove(i);
+				}
 			}
 		} 
 		
@@ -264,10 +267,13 @@ public class Tree
 			for (int i = 0; i < 7; i++)
 			{
 				// play i;
-				newCanvas.insertPlayer(i);
-				pos = i;
-				addEvaluation(Minimizer.ChildrenArray[i], newCanvas, currentCanvas);
-				//newCanvas.removeMove(i);
+				if(newCanvas.isValid(i))
+				{					
+					newCanvas.insertPlayer(i);
+					pos = i;
+					addEvaluation(Minimizer.ChildrenArray[i], newCanvas, currentCanvas);
+					newCanvas.removeMove(i);
+				}
 			}
 		}
 		
@@ -275,12 +281,12 @@ public class Tree
 		{
 			// eimaste se filo
 			int evaluationValue = 0;
-			node.SetValue(newCanvas.evaluate(evaluationValue) );
-			System.out.println(node.getValue());
-			newCanvas.removeMove(pos);
-			newCanvas = currentCanvas;
+			node.SetValue(newCanvas.evaluate(evaluationValue));
+			//System.out.println(node.getValue());
+			//newCanvas.removeMove(pos);
+			//newCanvas = currentCanvas;
 		}
-		return currentCanvas;
+		//return currentCanvas;
 		//newCanvas.removeMove(pos);
 		
 	}

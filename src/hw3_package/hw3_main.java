@@ -18,10 +18,11 @@ public class hw3_main
 		canvas kati = new canvas(); 	// dokimi gia tin klasi tou pinaka
 		canvas newCanvas = new canvas();
 //		kati.evaluate();
-		Tree newTree = new Tree(5);
-		System.out.println(newTree.toDOTString());
+		//Tree newTree = new Tree(3);
+		Tree newTree;
+		//System.out.println(newTree.toDOTString());
 //		
-		String Filepath = ("/home/dimitris/Desktop/Objective Programming/hw3-objective-oriented-prog/test.dot");
+		String Filepath = ("C:\\Users\\jimar\\Desktop\\Uni\\6th semester\\Objective Programming\\hw3-objective-oriented-prog\\test.dot");
 //		
 		file = new File(Filepath);
 //		try {
@@ -34,15 +35,15 @@ public class hw3_main
 //			e.printStackTrace();
 //		}
 		
-		try {
-		newTree.toDotFile(file);
-	} catch (TreeExceptions e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+//		try {
+//		newTree.toDotFile(file);
+//	} catch (TreeExceptions e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	} catch (IOException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
 
 		
 		while(true)
@@ -59,16 +60,26 @@ public class hw3_main
 					kati.insertPlayer(a);
 					whoPlays = "AI";
 					
-					//evaluationValue = kati.evaluate(evaluationValue);
-					//System.out.println("The values is " + evaluationValue);
+					System.out.println("Player");
+					for (int i = 0; i < 6; i++)
+					{
+						for (int j = 0; j < 7; j++)
+						{
+							System.out.print("| " + kati.array[j][i] + " ");
+						}
+						System.out.println("|");
+						System.out.println("-----------------------------");
+					}
 					
-					break;
-				}
 					
-				case "AI":
-				{
+					
+					
+					
+					
+					
+					newTree = new Tree(5);
 					newCanvas = kati;
-					newCanvas = newTree.addEvaluation(newTree.root, newCanvas, kati);
+					newTree.addEvaluation(newTree.root, newCanvas, kati);
 					
 					//kati.insertAI(a);
 					//kati.removeMove(a);
@@ -87,32 +98,86 @@ public class hw3_main
 					ArrayList<Integer> optPath = new ArrayList<Integer>(0);
 					optPath = newTree.optimalPath();
 					
-					b = optPath.get(optPath.size() - 1);
-					System.out.println("Correct move is: "+b);
+					b = optPath.get(0);
+					System.out.println("Correct move is: "+b+optPath);
 					kati.insertAI(b);
 					
+					System.out.println("AI");
+					for (int i = 0; i < 6; i++)
+					{
+						for (int j = 0; j < 7; j++)
+						{
+							System.out.print("| " + kati.array[j][i] + " ");
+						}
+						System.out.println("|");
+						System.out.println("-----------------------------");
+					}
 					
 					//evaluationValue = kati.evaluate(evaluationValue);
 					//System.out.println("The values is " + evaluationValue);
 					
-//					try {
-//						newTree.toDotFile(file);
-//					} catch (TreeExceptions e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
+					break;
+				}
+//					
+//				case "AI":
+//				{
+//					newTree = new Tree(5);
+//					newCanvas = kati;
+//					newTree.addEvaluation(newTree.root, newCanvas, kati);
+//					
+//					//kati.insertAI(a);
+//					//kati.removeMove(a);
+//					whoPlays = "player";
+////					for (int i = 0; i < 6; i++)
+////					{
+////						for (int j = 0; j < 7; j++)
+////						{
+////							System.out.print("| " + newCanvas.array[j][i] + " ");
+////						}
+////						System.out.println("|");
+////						System.out.println("-----------------------------");
+////					}
+//					newTree.minMax();
+//					newTree.isMinMax = true;
+//					ArrayList<Integer> optPath = new ArrayList<Integer>(0);
+//					optPath = newTree.optimalPath();
+//					
+//					b = optPath.get(0);
+//					System.out.println("Correct move is: "+b+optPath);
+//					kati.insertAI(b);
+//					
+//					System.out.println("AI");
+//					for (int i = 0; i < 6; i++)
+//					{
+//						for (int j = 0; j < 7; j++)
+//						{
+//							System.out.print("| " + kati.array[j][i] + " ");
+//						}
+//						System.out.println("|");
+//						System.out.println("-----------------------------");
 //					}
-					
-					break;
-				}
-				
-				default:
-				{
-					//kati.evaluate(evaluationValue);
-					break;
-				}
+//					
+//					//evaluationValue = kati.evaluate(evaluationValue);
+//					//System.out.println("The values is " + evaluationValue);
+//					
+////					try {
+////						newTree.toDotFile(file);
+////					} catch (TreeExceptions e) {
+////						// TODO Auto-generated catch block
+////						e.printStackTrace();
+////					} catch (IOException e) {
+////						// TODO Auto-generated catch block
+////						e.printStackTrace();
+////					}
+//					
+//					break;
+//				}
+//				
+//				default:
+//				{
+//					//kati.evaluate(evaluationValue);
+//					break;
+//				}
 			}
 					
 		}
