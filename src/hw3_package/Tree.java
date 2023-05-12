@@ -251,8 +251,8 @@ public class Tree
 			for (int i = 0; i < 7; i++)
 			{
 				// play i;
-				if(newCanvas.isValid(i))
-				{					
+				if(newCanvas.isValid(i))		// check if the move is valid otherwise dont put the node;
+				{								// isos na thelei by default oi komvoi na exoyn -2000 timi kai oxi 0
 					newCanvas.insertAI(i);
 					pos = i;
 					addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas);

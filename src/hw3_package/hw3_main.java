@@ -19,7 +19,7 @@ public class hw3_main
 		canvas newCanvas = new canvas();
 //		kati.evaluate();
 		//Tree newTree = new Tree(3);
-		Tree newTree;
+		TreeAdvanced newTree;
 		//System.out.println(newTree.toDOTString());
 //		
 		String Filepath = ("C:\\Users\\jimar\\Desktop\\Uni\\6th semester\\Objective Programming\\hw3-objective-oriented-prog\\test.dot");
@@ -44,10 +44,24 @@ public class hw3_main
 //		// TODO Auto-generated catch block
 //		e.printStackTrace();
 //	}
+		
+		int winCondition;
 
 		
 		while(true)
 		{		
+			winCondition = kati.checkWin();
+			if(winCondition == 1)
+			{
+				System.out.println("Winner: AI");
+				return;
+			}
+			else if(winCondition == 2)
+			{
+				System.out.println("Winner: Player");
+				return;
+			}
+			
 			Scanner sc = new Scanner(System.in);
 			a = sc.nextInt();
 			if(a > 6)
@@ -57,6 +71,7 @@ public class hw3_main
 			{
 				case "player":
 				{
+					
 					kati.insertPlayer(a);
 					whoPlays = "AI";
 					
@@ -77,7 +92,7 @@ public class hw3_main
 					
 					
 					
-					newTree = new Tree(5);
+					newTree = new TreeAdvanced(5);
 					newCanvas = kati;
 					newTree.addEvaluation(newTree.root, newCanvas, kati);
 					
