@@ -13,21 +13,26 @@ public class Tree
 	boolean isPruned = false;
 	boolean onlyRoot = false;
 	
+	int [] fullColumn = {-1,-1,-1,-1,-1,-1};
+	
 	Random random = new Random();
 	
 	
-	public Tree(int depth)
+	public Tree(int depth, canvas board)
 	{
-		this.root = TreeDepthCreate(depth, true);
+		int length = 6;
+		this.root = TreeDepthCreate(depth, true, board, length);
 	}
 	
-	public TreeLeaves TreeDepthCreate(int depth, boolean isMaximizer)
+	public TreeLeaves TreeDepthCreate(int depth, boolean isMaximizer, canvas board, int length)
 	{
 		//MaximizerNode newNode = new MaximizerNode();
 		//root = newNode;
 		MinimizerNode newMinimizer = null;
 		MaximizerNode newMaximizer = null;
 		boolean checkMaximizer = false;		
+		
+		
 		
 		if(depth == -1)
 			return null;
@@ -51,28 +56,115 @@ public class Tree
 		{		
 			if(!isMaximizer)
 			{
-				newMinimizer = new MinimizerNode();
+//				newMinimizer = new MinimizerNode();
+				int validMoves = 0;
+				int pos = -10;
 				//newMinimizer.SetValue(random.nextInt(10));
-				newMinimizer.setChildrenSize(7);
 				
-				for(int i = 0; i < 7; i++)
+				//newMinimizer.setChildrenSize(7);
+	            for(int i = 0; i < 7; i++)
+	            {
+	                if(board.isValid(i))
+	                    validMoves++;
+	                else
+	                {
+	                	for (int j = 0; j < fullColumn.length; j++) 
+	                	{
+	                		pos = j;
+	                		if(fullColumn[j] == -1)
+	                		{
+	                			break;
+	                		}
+	                	}
+	                	fullColumn[pos] = i;
+	                }
+	            }
+	            
+	            if(validMoves == 0)
+	            	return null;
+	            
+	            newMinimizer = new MinimizerNode();
+	            newMinimizer.setChildrenSize(validMoves);
+				
+				for(int i = 0; i < validMoves; i++)
 				{
-					newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
+					//if(board.isValid(i))
+					//{						
+						newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+						//validMoves++ ;
+					//}
+//					for (int j = 0; j < fullColumn.length; j++) 
+//					{
+//						if (fullColumn[j] == i)
+//						{
+//							//int length;
+//							i = i + 1;
+//							
+//						}
+//					}	
+//					length = board.getAvailableCells(i);
+//					newMinimizer.ChildrenArray[length] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+					
 				}
+				//newMinimizer.setChildrenSize(validMoves);
 				return newMinimizer;
 			}
 			
 			
 			else
 			{
-				newMaximizer = new MaximizerNode();
-				//newMaximizer.SetValue(random.nextInt(10));
-				newMaximizer.setChildrenSize(7);
+//				newMinimizer = new MinimizerNode();
+				int validMoves = 0;
+				int pos = -10;
+				//newMinimizer.SetValue(random.nextInt(10));
 				
-				for(int i = 0; i< 7; i++)
+				//newMinimizer.setChildrenSize(7);
+	            for(int i = 0; i < 7; i++)
+	            {
+	                if(board.isValid(i))
+	                    validMoves++;
+	                else
+	                {
+	                	for (int j = 0; j < fullColumn.length; j++) 
+	                	{
+	                		pos = j;
+	                		if(fullColumn[j] == -1)
+	                		{
+	                			
+	                			break;
+	                		}
+	                	}
+	                	fullColumn[pos] = i;
+	                }
+	            }
+	            
+	            if(validMoves == 0)
+	            	return null;
+	            
+	            newMaximizer = new MaximizerNode();
+	            newMaximizer.setChildrenSize(validMoves);
+				
+				for(int i = 0; i < validMoves; i++)
 				{
-					newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
+					//if(board.isValid(i))
+					//{		
+					
+//					for (int j = 0; j < fullColumn.length; j++) 
+//					{
+//						if (fullColumn[j] != i)
+//						{
+//							//int length;
+//							length = board.getAvailableCells(i);
+//							newMaximizer.ChildrenArray[length] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+//						}
+//					}	
+					
+						//validMoves++ ;
+					//}
+					newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+					
 				}
+				//newMinimizer.setChildrenSize(validMoves);
 				return newMaximizer;
 			}
 		}
@@ -236,11 +328,11 @@ public class Tree
 	
 	
 	// na kano kapos anadromika na ftanei sta fila kai ekei na trexei tis 7 periptoseis kai paralila na exo ena copy tou canva kai na kano tis kiniseis mexri ekei
-	public void addEvaluation(TreeLeaves node, canvas newCanvas, canvas currentCanvas)
+	public void addEvaluation(TreeLeaves node, canvas newCanvas, canvas currentCanvas, int pos)
 	{
 		MaximizerNode Maximizer;
 		MinimizerNode Minimizer;
-		int pos = 0;
+		//int pos = -1;
 		
 		if(node == null)
 			return;
@@ -248,40 +340,58 @@ public class Tree
 		if (node instanceof MaximizerNode)
 		{			
 			Maximizer = (MaximizerNode) node;
-			for (int i = 0; i < 7; i++)
+			for (int i = 0; i < Maximizer.getChildrenSize(); i++)
 			{
 				// play i;
 				if(newCanvas.isValid(i))		// check if the move is valid otherwise dont put the node;
 				{								// isos na thelei by default oi komvoi na exoyn -2000 timi kai oxi 0
 					newCanvas.insertAI(i);
 					pos = i;
-					addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas);
+					addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas, pos);
 					newCanvas.removeMove(i);
 				}
+//				else
+//				{
+//					Maximizer.setChildrenSize(0);
+//				}
 			}
 		} 
 		
 		else if (node instanceof MinimizerNode)
 		{			
 			Minimizer = (MinimizerNode) node;
-			for (int i = 0; i < 7; i++)
+			for (int i = 0; i < Minimizer.getChildrenSize(); i++)
 			{
 				// play i;
 				if(newCanvas.isValid(i))
 				{					
 					newCanvas.insertPlayer(i);
 					pos = i;
-					addEvaluation(Minimizer.ChildrenArray[i], newCanvas, currentCanvas);
+					addEvaluation(Minimizer.ChildrenArray[i], newCanvas, currentCanvas, pos);
 					newCanvas.removeMove(i);
 				}
+//				else
+//				{
+//					 Minimizer.setChildrenSize(0);
+//				}
 			}
 		}
 		
 		else
 		{
 			// eimaste se filo
-			int evaluationValue = 0;
-			node.SetValue(newCanvas.evaluate(evaluationValue));
+			//if(pos >= 0)
+			//{
+				//if(newCanvas.isValid(pos))
+				//{
+					//int evaluationValue = 0;
+					//node.SetValue(newCanvas.evaluate());
+					node.SetValue(newCanvas.evaluateTwo());
+					//if(pos >= 0)
+						node.setMove(pos);
+				//}
+			//}
+			
 			//System.out.println(node.getValue());
 			//newCanvas.removeMove(pos);
 			//newCanvas = currentCanvas;
@@ -649,6 +759,7 @@ public class Tree
            else
            {
         	   graph.append(node.getValue());
+        	   //graph.append(node.move);
         	   graph.append("\"];\n");
            }
 
@@ -694,6 +805,29 @@ public class Tree
 			}
 		}
 		
+	}
+	
+	public TreeLeaves getNodeByPath(TreeLeaves root, Integer[] pathArray) 
+	{
+	    TreeNode currentNode;
+	    
+	    if(root instanceof TreeNode)
+	    	currentNode = (TreeNode) root;
+	    else
+	    	return null;
+	    for (int i = 0; i < pathArray.length; i++) 
+	    {
+	        if (currentNode == null || pathArray[i] >= currentNode.getChildrenSize()) 
+	        {
+	            return null; // path is invalid
+	        }
+	        if(! (currentNode.getChild(pathArray[i]) instanceof MaximizerNode) && !(currentNode.getChild(pathArray[i]) instanceof MinimizerNode) )
+	        	return currentNode.getChild(pathArray[i]);
+	        else
+	        	currentNode = (TreeNode) currentNode.getChild(pathArray[i]);
+	        	
+	    }
+	    return null;
 	}
 	
 	

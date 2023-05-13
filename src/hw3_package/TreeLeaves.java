@@ -6,6 +6,7 @@ public class TreeLeaves
 {
 	private double NodeValue; 		// it is private
 	public boolean isPruned = false;
+	int move = -2;
 	
 	// Constructor
 	public TreeLeaves()
@@ -28,5 +29,10 @@ public class TreeLeaves
 	public void SetValue(double NodeValue)
 	{
 		this.NodeValue = NodeValue;
+	}
+	
+	public void setMove(int newMove)
+	{
+		move = newMove;
 	}
 }

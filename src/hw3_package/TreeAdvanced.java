@@ -17,9 +17,9 @@ public class TreeAdvanced extends Tree		// Advanced Tree that implements the Min
 		super(JSONFile);
 	}
 	
-	public TreeAdvanced(int depth)
+	public TreeAdvanced(int depth, canvas board)
 	{
-		super(depth);
+		super(depth, board);
 	}
 	
 	
