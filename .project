@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/hw3_package/EventHandling.java</name>
-			<type>1</type>
-			<location>C:/Users/jimar/Downloads/EventHandling.java</location>
-		</link>
-	</linkedResources>
 </projectDescription>
