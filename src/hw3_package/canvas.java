@@ -3,6 +3,7 @@ package hw3_package;
 public class canvas 
 {
 	char[][] array = new char[7][6];
+	int flag = 0;
 	
 	
 	public canvas()
@@ -260,13 +261,15 @@ public class canvas
 		return evaluationValue;
 	}
 	
-	public void insertPlayer(int a)
+	public int insertPlayer(int a)
 	{
+		int pos = -1;
 		for(int i = 5; i >= 0; i--)
 		{
 			if(array[a][i] != 'X' && array[a][i] != 'O' )
 			{
 				array[a][i] = 'X';
+				pos = i;
 				break;
 			}
 		}
@@ -282,6 +285,7 @@ public class canvas
 //			System.out.println("|");
 //			System.out.println("-----------------------------");
 //		}
+		return pos;
 	}
 	
 	public int insertAI(int a)
@@ -681,6 +685,17 @@ public class canvas
 		}
 		
 		return count;
+	}
+	
+	public void clear()
+	{
+		for(int i = 0; i < 7; i++)
+		{
+			for(int j = 0; j < 6; j++)
+			{
+				array[i][j] = ' ';
+			}
+		}	
 	}
 	
 }

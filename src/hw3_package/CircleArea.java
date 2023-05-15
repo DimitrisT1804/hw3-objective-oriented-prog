@@ -34,7 +34,6 @@ public class CircleArea extends JComponent
                 circleColors[row][column] = Color.WHITE;
             }
             
-            
         }
         addMouseListener(new MouseAdapter() 
         {
@@ -82,6 +81,16 @@ public class CircleArea extends JComponent
         }
     }
     
+    public void clear()
+    {
+        for (int row = 0; row < ROWS; row++) 
+        {
+            for (int column = 0; column < COLUMNS; column++) 
+            {
+                circleColors[row][column] = Color.WHITE;
+            }
+        }
+    }
 
     
     

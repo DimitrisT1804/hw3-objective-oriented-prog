@@ -26,10 +26,10 @@ import javax.swing.JRadioButton;
 
 import java.awt.*;
 
-public class TEST
+public class test2
 {
 
-	private JFrame frame;
+	public JFrame frame;
 	private CircleArea circleArea = new CircleArea();
 	JPanel panel = new JPanel();
 	game newGame = new game();
@@ -37,6 +37,9 @@ public class TEST
 	int a = 0;
 	boolean isValid = false;
 	lock newLock = new lock();
+	boolean continueRunning = true;
+	
+	canvas board = new canvas();
 
 	/**
 	 * Launch the application.
@@ -59,15 +62,16 @@ public class TEST
 //		{
 //			e.printStackTrace();
 //		}
-		TEST newTest = new TEST();
+		test2 newTest = new test2();
 		newTest.frame.setVisible(true);
+		
 
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public TEST() 
+	public test2() 
 	{
 		initialize();
 //	    frame.addKeyListener(new KeyListener() 
@@ -139,6 +143,9 @@ public class TEST
 		a = move;
 	}
 	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	private void initialize() 
 	{
 	    frame = new JFrame();
@@ -156,8 +163,12 @@ public class TEST
 	    //frame.setVisible(true);
 	    
 	    panel.requestFocusInWindow();
+//	    JOptionPane.showMessageDialog(frame, "HELLO THERE");
+	    //frame.setVisible(true);
 	    
-	    JOptionPane.showConfirmDialog(frame, "hello");
+	    
+	    
+	    
 	    
 	    
 	    JMenuBar menuBar = new JMenuBar();
@@ -201,9 +212,13 @@ public class TEST
 			{
 				// TODO Auto-generated method stub
 				newGame.difficulty = 5;
+				circleArea.clear();
+				circleArea.repaint();
+				board.clear();
 				if(newGame.player == 2)
-				{
-					running_AI();
+				{	
+					
+					int check = running_AI();
 				}
 				else if (newGame.player == 1)
 				{
@@ -260,7 +275,7 @@ public class TEST
 	}
 	
 	
-	public void running()
+	public int running()
 	{
 		frame.addKeyListener(new KeyListener() 
 	    {
@@ -277,17 +292,60 @@ public class TEST
 	    				int a = Character.getNumericValue(e.getKeyChar());
 	    				isValid = true;
 	    				inittMove(a);
-	    				canvas board = new canvas();
+	    				//canvas board = new canvas();
 	    				board = newGame.getCanvas();
 	    				int c = board.insertPlayer(a);
-	    				circleArea.setCircleColor(c, a, Color.MAGENTA);
+	    				circleArea.setCircleColor(c, b, Color.MAGENTA);
+	    				
+//	    		        Timer timer = new Timer(10, new ActionListener() {
+//	    		            @Override
+//	    		            public void actionPerformed(ActionEvent e) {
+//	    		                // Update the current position of the piece
+//	    		                currentY += 2;
+//
+//	    		                // Repaint the panel to show the updated position
+//	    		                repaint();
+//
+//	    		                // Check if the animation has reached the end position
+//	    		                if (currentY >= endY) {
+//	    		                    ((Timer) e.getSource()).stop();
+//	    		                    // Animation completed, perform further actions
+//	    		                    // (e.g., update game state, trigger next move, etc.)
+//	    		                }
+//	    		            }
+//	    		        });
+
+	    		        // Start the animation timer
+	    		        //timer.start();
+
+//	    				for(int i = 0; i <6; i++)
+//	    				{
+//	    					
+//	    					circleArea.setCircleColor(i, a, Color.MAGENTA);
+//	    					circleArea.repaint();
+//	    					circleArea.setCircleColor(i, a, Color.WHITE);
+//	    					
+//	    					try {
+//								Thread.sleep(100);
+//							} catch (InterruptedException e1) {
+//								// TODO Auto-generated catch block
+//								e1.printStackTrace();
+//							}
+//	    				}
 	    				newGame.playAI(board);
+	    				
 	    				circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
 	    				//b = board.insertAI(a);
 	    				circleArea.repaint();
 	    				
-	    				if(newGame.winCondition != 0)
+	    				if(newGame.winCondition == 1)
 	    				{
+	    					JOptionPane.showMessageDialog(frame, "Winner: AI!");
+	    					return;
+	    				}
+	    				else if (newGame.winCondition == 2)
+	    				{
+	    					JOptionPane.showMessageDialog(frame, "Winner: Player!");
 	    					return;
 	    				}
 	    				//panel.add(circleArea);
@@ -319,13 +377,14 @@ public class TEST
 			}
 			
 	    });
+		return -1;
 
 	}
 	
-	public void running_AI()
+	public int running_AI()
 	{
 		//int flag = 0;
-		canvas board = new canvas();
+		//canvas board = new canvas();
 		//while(newGame.winCondition == 0)
 		//{
 			
@@ -338,53 +397,64 @@ public class TEST
 				
 				if(newGame.winCondition != 0)
 				{
-					return;
+					return -1;
 				}
 				board.flag = 1;
 			}
 			
-			frame.addKeyListener(new KeyListener() 
-			{
-				public void keyTyped(KeyEvent e)
+			//while(continueRunning)
+			//{
+				
+				frame.addKeyListener(new KeyListener() 
 				{
-					//if(e.getKeyChar() == '0')
-					//{
-					//while(true)
-					//{
-					
-					//while(newLock.isLocked() == true)
-					//{		
-					int b = 0;
-					int a = Character.getNumericValue(e.getKeyChar());
-					isValid = true;
-					inittMove(a);
-					
-					//board = newGame.getCanvas();
-					int c = board.insertPlayer(a);
-					circleArea.setCircleColor(c, a, Color.MAGENTA);
-					board.flag = 0;
-					
-					newGame.playAI(board);
-					circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
-					//b = board.insertAI(a);
-					circleArea.repaint();
-					
-					if(newGame.winCondition != 0)
+					public void keyTyped(KeyEvent e)
 					{
-						return;
+						//if(e.getKeyChar() == '0')
+						//{
+						//while(true)
+						//{
+						
+						//while(newLock.isLocked() == true)
+						//{		
+						int b = 0;
+						int a = Character.getNumericValue(e.getKeyChar());
+						isValid = true;
+						inittMove(a);
+						
+						//board = newGame.getCanvas();
+						int c = board.insertPlayer(a);
+						circleArea.setCircleColor(c, a, Color.MAGENTA);
+						board.flag = 0;
+						
+						newGame.playAI(board);
+						circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
+						//b = board.insertAI(a);
+						circleArea.repaint();
+						
+						if(newGame.winCondition == 1)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: AI!");
+							continueRunning = false;
+							return;
+						}
+						else if (newGame.winCondition == 2)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: Player!");
+							continueRunning = false;
+							return;
+						}
+						
+						//panel.add(circleArea);
+						//}
+						//newLock.unlock();
+						//}
+						//}
 					}
 					
-					//panel.add(circleArea);
-					//}
-					//newLock.unlock();
-					//}
-					//}
-				}
-				
-				@Override
-				public void keyPressed(KeyEvent e) 
-				{
-					// TODO Auto-generated method stub
+					@Override
+					public void keyPressed(KeyEvent e) 
+					{
+						// TODO Auto-generated method stub
 //	    		if(e.getKeyCode() == KeyEvent.VK_0)
 //	    		{
 //	    			circleArea.setCircleColor(0, 0, Color.RED);
@@ -392,17 +462,20 @@ public class TEST
 //	    			System.out.println("It worked");
 //	    			//panel.add(circleArea);
 //	    		}
+						
+					}
 					
-				}
-				
-				@Override
-				public void keyReleased(KeyEvent e) {
-					// TODO Auto-generated method stub
-					isValid = false;
+					@Override
+					public void keyReleased(KeyEvent e) {
+						// TODO Auto-generated method stub
+						isValid = false;
+						
+					}
 					
-				}
+				});
 				
-			});
+				return -1;
+			//}
 		//}
 		
 
