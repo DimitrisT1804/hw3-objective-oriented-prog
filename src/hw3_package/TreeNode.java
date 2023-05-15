@@ -5,7 +5,7 @@ public class TreeNode extends TreeLeaves
 		TreeLeaves[] ChildrenArray;		// TreeLeaves Array that stores Children of each node
 		double alpha = Double.NEGATIVE_INFINITY;		// -infinite
 		double beta = Double.POSITIVE_INFINITY;		// +infinite
-		
+
 		// Default Constructor
 		public TreeNode()
 		{

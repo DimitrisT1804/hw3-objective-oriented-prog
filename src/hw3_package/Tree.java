@@ -32,7 +32,14 @@ public class Tree
 		MaximizerNode newMaximizer = null;
 		boolean checkMaximizer = false;		
 		
-		
+//		int boardValid = 0;
+//		for(int i = 0; i < 7; i++)
+//		{
+//			if(board.isValid(i))
+//				boardValid++ ;
+//		}
+//		if(boardValid == 0)
+//			return null;
 		
 		if(depth == -1)
 			return null;
@@ -49,6 +56,8 @@ public class Tree
 		if(depth == 0)
 		{
 			TreeLeaves newNode = new TreeLeaves();
+			//newNode.SetValue(board.evaluateTwo());;
+			
 			//newNode.SetValue(random.nextInt(10));
 			return newNode;
 		}
@@ -77,6 +86,7 @@ public class Tree
 	                		}
 	                	}
 	                	fullColumn[pos] = i;
+	                	//fullColumn[pos] = board.insertAI(i);
 	                }
 	            }
 	            
@@ -84,13 +94,48 @@ public class Tree
 	            	return null;
 	            
 	            newMinimizer = new MinimizerNode();
-	            newMinimizer.setChildrenSize(validMoves);
+	            newMinimizer.setChildrenSize(7);
 				
-				for(int i = 0; i < validMoves; i++)
+				for(int i = 0; i < 7; i++)
 				{
 					//if(board.isValid(i))
 					//{						
+					
+					//canvas newBoard = board;
+					//newBoard.insertAI(i);
+//					int k = i;
+//					for (int j = 0; j < fullColumn.length; j++) 
+//					{
+//						if (fullColumn[j] == k)
+//						{
+//							//System.out.print(fullColumn[j]);
+//							if(k < 6)
+//								k = k + 1;
+//							//break;
+//						}
+//					}	
+					
+					//if(k < 7)
+					//{
+						//canvas newBoard = board;
+						//newBoard.insertPlayer(i);
+						//newMinimizer.move = k;
 						newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+						
+						//newBoard.removeMove(k);
+						//board.removeMove(k);
+					//}
+					
+						
+//						for (int k = 0; k < 6; k++)
+//						{
+//							for (int j = 0; j < 7; j++)
+//							{
+//								System.out.print("| " + board.array[j][k] + " ");
+//							}
+//							System.out.println("|");
+//							System.out.println("-----------------------------");
+//						}
 						//validMoves++ ;
 					//}
 //					for (int j = 0; j < fullColumn.length; j++) 
@@ -142,9 +187,9 @@ public class Tree
 	            	return null;
 	            
 	            newMaximizer = new MaximizerNode();
-	            newMaximizer.setChildrenSize(validMoves);
+	            newMaximizer.setChildrenSize(7);
 				
-				for(int i = 0; i < validMoves; i++)
+				for(int i = 0; i < 7; i++)
 				{
 					//if(board.isValid(i))
 					//{		
@@ -161,7 +206,31 @@ public class Tree
 					
 						//validMoves++ ;
 					//}
-					newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+					//canvas newBoard = board;
+					//canvas newBoard = board;
+					//newBoard.insertPlayer(i);
+//					int k = i;
+//					for (int j = 0; j < fullColumn.length; j++) 
+//					{
+//						if (fullColumn[j] == k)
+//						{
+//							//System.out.print(fullColumn[j]);
+//							if(k < 6)
+//								k = k + 1;
+//							//break;
+//						}
+//					}	
+					//if(k < 7)
+					//{
+						//canvas newBoard = board;
+						//newBoard.insertAI(k);
+						
+						//newMaximizer.move = k;
+						newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+						
+						//board.removeMove(k);
+						//newBoard.removeMove(k);
+					//}
 					
 				}
 				//newMinimizer.setChildrenSize(validMoves);
@@ -347,6 +416,7 @@ public class Tree
 				{								// isos na thelei by default oi komvoi na exoyn -2000 timi kai oxi 0
 					newCanvas.insertAI(i);
 					pos = i;
+					Maximizer.visited = 1;
 					addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas, pos);
 					newCanvas.removeMove(i);
 				}
@@ -367,6 +437,7 @@ public class Tree
 				{					
 					newCanvas.insertPlayer(i);
 					pos = i;
+					Minimizer.visited = 1;
 					addEvaluation(Minimizer.ChildrenArray[i], newCanvas, currentCanvas, pos);
 					newCanvas.removeMove(i);
 				}
@@ -389,6 +460,7 @@ public class Tree
 					node.SetValue(newCanvas.evaluateTwo());
 					//if(pos >= 0)
 						node.setMove(pos);
+						node.visited = 1;
 				//}
 			//}
 			
@@ -438,7 +510,8 @@ public class Tree
 				minMaxCall(newNode.ChildrenArray[i]);		// Recursive for each child of the node
 			}
 			
-			newNode.SetValue(newNode.getMax());		// After initializing all children of each node, it gets the maximum value of each node
+			if(newNode.ChildrenArray.length != 0)
+				newNode.SetValue(newNode.getMax());		// After initializing all children of each node, it gets the maximum value of each node
 			return newNode;
 		}
 		
@@ -450,8 +523,8 @@ public class Tree
 			{
 				minMaxCall(newNode.ChildrenArray[i]);
 			}
-			
-			newNode.SetValue(newNode.getMin());
+			if(newNode.ChildrenArray.length != 0)
+				newNode.SetValue(newNode.getMin());
 			return newNode;
 		}
 		

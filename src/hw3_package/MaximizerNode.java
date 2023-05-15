@@ -13,9 +13,12 @@ public class MaximizerNode extends TreeNode
 		double max = super.ChildrenArray[0].getValue();
 		for (int i = 0; i < super.ChildrenArray.length; i++)
 		{
-			if(ChildrenArray[i].getValue() > max)
-			{
-				max = ChildrenArray[i].getValue();
+			if(ChildrenArray[i].visited == 1)
+			{				
+				if(ChildrenArray[i].getValue() > max)
+				{
+					max = ChildrenArray[i].getValue();
+				}
 			}
 		}
 		if(super.ChildrenArray.length == 0)

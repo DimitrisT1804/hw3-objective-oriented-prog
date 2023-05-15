@@ -284,8 +284,9 @@ public class canvas
 //		}
 	}
 	
-	public void insertAI(int a)
+	public int insertAI(int a)
 	{
+		int pos = -1;
 		if(isValid(a))
 		{
 			for(int i = 5; i >= 0; i--)
@@ -293,9 +294,12 @@ public class canvas
 				if(array[a][i] != 'O' && array[a][i] != 'X')
 				{
 					array[a][i] = 'O';
+					pos = i;
 					break;
 				}
+				//return i;
 			}
+			
 		}
 		
 		//System.out.println("AI");
@@ -310,6 +314,7 @@ public class canvas
 //			System.out.println("|");
 //			System.out.println("-----------------------------");
 //		}
+		return pos;
 	}
 	
 	public void removeMove(int a)

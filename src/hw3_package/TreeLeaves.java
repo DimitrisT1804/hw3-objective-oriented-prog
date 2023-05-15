@@ -7,6 +7,7 @@ public class TreeLeaves
 	private double NodeValue; 		// it is private
 	public boolean isPruned = false;
 	int move = -2;
+	int visited = 0;
 	
 	// Constructor
 	public TreeLeaves()

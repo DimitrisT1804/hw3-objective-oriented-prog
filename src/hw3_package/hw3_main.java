@@ -45,7 +45,7 @@ public class hw3_main
 			
 			Scanner sc = new Scanner(System.in);
 			whoPlays = sc.next();
-
+			TEST test = new TEST();
 			
 			switch (whoPlays)
 			{
@@ -93,6 +93,7 @@ public class hw3_main
 						
 						
 						newTree = new TreeAdvanced(5, kati);
+						System.out.println("The size of tree is: " + newTree.size());
 						newCanvas = kati;
 						int pos = -1;
 						newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
@@ -142,20 +143,29 @@ public class hw3_main
 						
 						b = optPath.get(0);
 						System.out.println("First move is: "+b+"      ");
-						for(int i = 0; i < 6; i++)
-						{
-							for (int j = 0; j < newTree.fullColumn.length; j++) 
-							{
-								if (newTree.fullColumn[j] == b)
-								{
-									System.out.print(newTree.fullColumn[j]);
-									b = b + 1;
-									break;
-								}
-							}	
-						}
+//						for(int i = 0; i < 6; i++)
+//						{
+//							for (int j = 0; j < newTree.fullColumn.length; j++) 
+//							{
+//								if (newTree.fullColumn[j] == b)
+//								{
+//									System.out.print(newTree.fullColumn[j]);
+//									b = b + 1;
+//									break;
+//								}
+//							}	
+//						}
 						
 						System.out.println("Correct move is: "+b+optPath);
+//						TreeNode root = (TreeNode) newTree.root;
+//						for(int i = 0; i < root.ChildrenArray.length; i++)
+//						{
+//							if(root.getValue() == root.ChildrenArray[i].getValue())
+//							{
+//								b = root.ChildrenArray[i].move;
+//							}
+//						}
+						
 						if(b >= 0 && b <= 6)
 							kati.insertAI(b);
 						
@@ -183,18 +193,16 @@ public class hw3_main
 							return;
 						}
 						
-					try {
-						newTree.toDotFile(file);
-					} catch (TreeExceptions e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					try {
+//						newTree.toDotFile(file);
+//					} catch (TreeExceptions e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					} catch (IOException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 						
-						//evaluationValue = kati.evaluate(evaluationValue);
-						//System.out.println("The values is " + evaluationValue);
 						
 					}
 					break;
@@ -202,18 +210,16 @@ public class hw3_main
 					
 			case "AI":
 			{
-				while(a != 10 && b != 10)
+				while(true)
 				{
 					
 					int[] fullColumn = new int[6];
 					
-					
-					
-					
-//					newTree = new TreeAdvanced(5, kati, fullColumn);
-//					newCanvas = kati;
-//					int pos = -1;
-//					newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
+					newTree = new TreeAdvanced(5, kati);
+					System.out.println("The size of tree is: " + newTree.size());
+					newCanvas = kati;
+					int pos = -1;
+					newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
 					
 //				try {
 //					newTree.toDotFile(file);
@@ -224,7 +230,7 @@ public class hw3_main
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
-					
+//					
 					//kati.insertAI(a);
 					//kati.removeMove(a);
 					//whoPlays = "player";
@@ -238,14 +244,14 @@ public class hw3_main
 //					System.out.println("-----------------------------");
 //				}
 					
-//					ArrayList<Integer> smallList = new ArrayList<Integer>(6);
-//					
-//					TreeLeaves NodeMove;
-//					
-//					newTree.minMax();
-//					newTree.isMinMax = true;
-//					ArrayList<Integer> optPath = new ArrayList<Integer>(0);
-//					optPath = newTree.optimalPath();
+					ArrayList<Integer> smallList = new ArrayList<Integer>(6);
+					
+					TreeLeaves NodeMove;
+					
+					newTree.minMax();
+					newTree.isMinMax = true;
+					ArrayList<Integer> optPath = new ArrayList<Integer>(0);
+					optPath = newTree.optimalPath();
 					
 					
 //				
@@ -258,21 +264,31 @@ public class hw3_main
 //				NodeMove = newTree.getNodeByPath(newTree.root, pathArray);
 //				b = NodeMove.move;
 					
-//					b = optPath.get(0);
+					b = optPath.get(0);
+					System.out.println("First move is: "+b+"      ");
 //					for(int i = 0; i < 6; i++)
 //					{
-//						for (int j = 0; j < fullColumn.length; j++) 
+//						for (int j = 0; j < newTree.fullColumn.length; j++) 
 //						{
-//							if (fullColumn[j] == b)
+//							if (newTree.fullColumn[j] == b)
 //							{
+//								System.out.print(newTree.fullColumn[j]);
 //								b = b + 1;
 //								break;
 //							}
 //						}	
 //					}
-//					
-//					System.out.println("Correct move is: "+b+optPath);
-					b = sc.nextInt();
+					
+					System.out.println("Correct move is: "+b+optPath);
+//					TreeNode root = (TreeNode) newTree.root;
+//					for(int i = 0; i < root.ChildrenArray.length; i++)
+//					{
+//						if(root.getValue() == root.ChildrenArray[i].getValue())
+//						{
+//							b = root.ChildrenArray[i].move;
+//						}
+//					}
+					
 					if(b >= 0 && b <= 6)
 						kati.insertAI(b);
 					
@@ -287,6 +303,7 @@ public class hw3_main
 						System.out.println("-----------------------------");
 					}
 					
+					//winCondition = kati.checkWin();
 					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
@@ -298,6 +315,8 @@ public class hw3_main
 						System.out.println("Winner: Player");
 						return;
 					}
+					
+					
 					
 					a = sc.nextInt();
 					if(a > 6)
@@ -317,6 +336,9 @@ public class hw3_main
 						System.out.println("-----------------------------");
 					}
 					
+					//System.out.println("check: "+ kati.getAvailableCells(0));
+					
+//				winCondition = kati.checkWin();
 					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
@@ -328,14 +350,10 @@ public class hw3_main
 						System.out.println("Winner: Player");
 						return;
 					}
-					
-				}
-				//}
-				 kati.evaluateTwo();
-					
 		}
 		
 	}					
 	}
+}
 }
 
