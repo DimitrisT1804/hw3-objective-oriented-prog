@@ -45,7 +45,7 @@ public class hw3_main
 			
 			Scanner sc = new Scanner(System.in);
 			whoPlays = sc.next();
-			TEST test = new TEST();
+			//TEST test = new TEST();
 			
 			switch (whoPlays)
 			{
@@ -193,15 +193,15 @@ public class hw3_main
 							return;
 						}
 						
-//					try {
-//						newTree.toDotFile(file);
-//					} catch (TreeExceptions e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					} catch (IOException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
+					try {
+						newTree.toDotFile(file);
+					} catch (TreeExceptions e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 						
 						
 					}
@@ -210,8 +210,28 @@ public class hw3_main
 					
 			case "AI":
 			{
+				kati.insertAI(3);
 				while(true)
 				{
+					
+					
+					a = sc.nextInt();
+					if(a > 6)
+						break;
+					
+					kati.insertPlayer(a);
+					//whoPlays = "AI";
+					
+					System.out.println("Player");
+					for (int i = 0; i < 6; i++)
+					{
+						for (int j = 0; j < 7; j++)
+						{
+							System.out.print("| " + kati.array[j][i] + " ");
+						}
+						System.out.println("|");
+						System.out.println("-----------------------------");
+					}
 					
 					int[] fullColumn = new int[6];
 					
@@ -318,24 +338,18 @@ public class hw3_main
 					
 					
 					
-					a = sc.nextInt();
-					if(a > 6)
-						break;
 					
-					kati.insertPlayer(a);
-					//whoPlays = "AI";
 					
-					System.out.println("Player");
-					for (int i = 0; i < 6; i++)
-					{
-						for (int j = 0; j < 7; j++)
-						{
-							System.out.print("| " + kati.array[j][i] + " ");
-						}
-						System.out.println("|");
-						System.out.println("-----------------------------");
-					}
 					
+//					try {
+//					newTree.toDotFile(file);
+//				} catch (TreeExceptions e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 					//System.out.println("check: "+ kati.getAvailableCells(0));
 					
 //				winCondition = kati.checkWin();

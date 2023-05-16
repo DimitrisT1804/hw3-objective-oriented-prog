@@ -3,19 +3,32 @@ package hw3_package;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.*;
 
 public class game
 {
 	int difficulty = 5;
 	int player = 0;
 	canvas kati = new canvas(); 	// dokimi gia tin klasi tou pinaka
-	int winCondition;
+	int winCondition = 0;
 	int b = -1, d = -1;
+	
+//	File file;
+//	String Filepath = "C:\\Users\\jimar\\Desktop\\Uni\\6th_semester\\Objective Programming\\hw3-objective-oriented-prog\\test.dot";
+//	file = new File(Filepath);
 	
 	
 	public game()
 	{
 		
+	}
+	
+	public void clear()
+	{
+		kati.clear();
+		b = -1; 
+		d = -1;
+		winCondition = 0;
 	}
 	
 	public void setDifficulty(int difficulty)
@@ -289,7 +302,15 @@ public class game
 			System.out.println("Winner: Player");
 			return;
 		}
+		
+//		try {
+//		newTree.toDotFile(file);
+//	} catch (TreeExceptions e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
 	}
+	
 	
 	public void playPlayer(canvas kati)
 	{
