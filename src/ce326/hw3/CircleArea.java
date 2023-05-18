@@ -1,11 +1,7 @@
 package ce326.hw3;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.*;
+import java.awt.*;
 
 public class CircleArea extends JComponent 
 {

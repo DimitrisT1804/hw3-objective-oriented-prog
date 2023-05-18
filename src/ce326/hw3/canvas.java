@@ -210,7 +210,7 @@ public class canvas
 	            else if (reds > 0 && yellows == 0) 
 	            {
 	            	if(reds ==4)
-	            		score += 1000;
+	            		score -= 1000;
 	            	else
 	            		score -= Math.pow(4, reds-1);
 	            		
@@ -243,7 +243,7 @@ public class canvas
 	            else if (reds > 0 && yellows == 0) 
 	            {
 	            	if(reds ==4)
-	            		score += 1000;
+	            		score -= 1000;
 	            	else
 	            		score -= Math.pow(4, reds-1);
 	            		
@@ -276,7 +276,7 @@ public class canvas
 	            else if (reds > 0 && yellows == 0) 
 	            {
 	            	if(reds ==4)
-	            		score += 1000;
+	            		score -= 1000;
 	            	else
 	            		score -= Math.pow(4, reds-1);
 	            		
@@ -309,7 +309,7 @@ public class canvas
 	            else if (reds > 0 && yellows == 0) 
 	            {
 	            	if(reds ==4)
-	            		score += 1000;
+	            		score -= 1000;
 	            	else
 	            		score -= Math.pow(4, reds-1);
 	            		

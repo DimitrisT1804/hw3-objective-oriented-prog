@@ -27,12 +27,13 @@ public class GUI
 	private void initialize() 
 	{
 	    frame = new JFrame();
-	    frame.setBounds(100, 100, 1104, 881);
+	    frame.setBounds(400, 100, 935, 865);
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	    
 	    frame.getContentPane().add(panel, BorderLayout.CENTER);
 	    panel.add(circleArea);
+	    //frame.setSize(935, 865);	// size of panel
 	    
 	    panel.requestFocusInWindow();
 	    
@@ -73,11 +74,12 @@ public class GUI
 				newGame.difficulty = 1;
 				if(rdbtnNewRadioButton.isSelected())
 				{	
-					
+					frame.removeKeyListener(keyListener);	// to dont call more times when runningAI runs
 					running_AI();
 				}
 				else if (rdbtnNewRadioButton_1.isSelected())
 				{
+					frame.removeKeyListener(KeyListenerPlayer);
 					runningPlayer();
 				}
 				
@@ -99,11 +101,12 @@ public class GUI
 				newGame.difficulty = 3;
 				if(rdbtnNewRadioButton.isSelected())
 				{	
-					
+					frame.removeKeyListener(keyListener);
 					running_AI();
 				}
 				else if (rdbtnNewRadioButton_1.isSelected())
 				{
+					frame.removeKeyListener(KeyListenerPlayer);
 					runningPlayer();
 				}
 				
@@ -128,10 +131,13 @@ public class GUI
 				{		
 					newGame.clear();
 					board.clear();
+					//mntmNewMenuItem_1.removeActionListener(mntmNewMenuItem_1.getActionListeners()[0]);
+					frame.removeKeyListener(keyListener);
 					running_AI();
 				}
 				else if (rdbtnNewRadioButton_1.isSelected())
 				{
+					frame.removeKeyListener(KeyListenerPlayer);
 					runningPlayer();
 				}
 				
@@ -172,8 +178,21 @@ public class GUI
 	    JMenu mnNewMenu_2 = new JMenu("History");
 	    menuBar.add(mnNewMenu_2);
 	    
-	    JMenu mnNewMenu_3 = new JMenu("Help");
+	    JMenu mnNewMenu_3 = new JMenu("Help");	    
 	    menuBar.add(mnNewMenu_3);
+	    
+	    JMenuItem helpButton = new JMenuItem("Press for Help");
+	    mnNewMenu_3.add(helpButton);
+	    
+	    helpButton.addActionListener(new ActionListener() 
+	    {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				JOptionPane.showMessageDialog(frame, "Press 0-6 to add a piece in the board, \nOR double click in a column!");
+			}
+		});
 	}
 	
 	KeyListener KeyListenerPlayer = new KeyListener()
@@ -258,6 +277,7 @@ public class GUI
 	
 	KeyListener keyListener = new KeyListener()
 	{
+		@Override
 		public void keyTyped(KeyEvent e)
 		{
 			int a = Character.getNumericValue(e.getKeyChar());	
@@ -291,10 +311,11 @@ public class GUI
 					winConditionHandle();
 					return;
 				}
-				circleArea.repaint();
+				//circleArea.repaint();
 				newGame.playAI();
 				circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
 				circleArea.repaint();
+				wining = board.checkWin();
 				
 				if(newGame.winCondition == 1)
 				{
@@ -457,5 +478,4 @@ public class GUI
 		circleArea.removeMouseListener(MouseClicked);
 		circleArea.removeMouseMotionListener(Mouseadapter);
 	}	
-
 }
