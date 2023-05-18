@@ -1,4 +1,4 @@
-package hw3_package;
+package ce326.hw3;
 
 import java.io.*;
 import java.util.*;
@@ -26,20 +26,9 @@ public class Tree
 	
 	public TreeLeaves TreeDepthCreate(int depth, boolean isMaximizer, canvas board, int length)
 	{
-		//MaximizerNode newNode = new MaximizerNode();
-		//root = newNode;
 		MinimizerNode newMinimizer = null;
 		MaximizerNode newMaximizer = null;
 		boolean checkMaximizer = false;		
-		
-//		int boardValid = 0;
-//		for(int i = 0; i < 7; i++)
-//		{
-//			if(board.isValid(i))
-//				boardValid++ ;
-//		}
-//		if(boardValid == 0)
-//			return null;
 		
 		if(depth == -1)
 			return null;
@@ -56,21 +45,14 @@ public class Tree
 		if(depth == 0)
 		{
 			TreeLeaves newNode = new TreeLeaves();
-			//newNode.SetValue(board.evaluateTwo());;
-			
-			//newNode.SetValue(random.nextInt(10));
 			return newNode;
 		}
 		else
 		{		
 			if(!isMaximizer)
 			{
-//				newMinimizer = new MinimizerNode();
 				int validMoves = 0;
 				int pos = -10;
-				//newMinimizer.SetValue(random.nextInt(10));
-				
-				//newMinimizer.setChildrenSize(7);
 	            for(int i = 0; i < 7; i++)
 	            {
 	                if(board.isValid(i))
@@ -86,7 +68,6 @@ public class Tree
 	                		}
 	                	}
 	                	fullColumn[pos] = i;
-	                	//fullColumn[pos] = board.insertAI(i);
 	                }
 	            }
 	            
@@ -98,72 +79,18 @@ public class Tree
 				
 				for(int i = 0; i < 7; i++)
 				{
-					//if(board.isValid(i))
-					//{						
-					
-					//canvas newBoard = board;
-					//newBoard.insertAI(i);
-//					int k = i;
-//					for (int j = 0; j < fullColumn.length; j++) 
-//					{
-//						if (fullColumn[j] == k)
-//						{
-//							//System.out.print(fullColumn[j]);
-//							if(k < 6)
-//								k = k + 1;
-//							//break;
-//						}
-//					}	
-					
-					//if(k < 7)
-					//{
-						//canvas newBoard = board;
-						//newBoard.insertPlayer(i);
-						//newMinimizer.move = k;
-						newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
-						
-						//newBoard.removeMove(k);
-						//board.removeMove(k);
-					//}
-					
-						
-//						for (int k = 0; k < 6; k++)
-//						{
-//							for (int j = 0; j < 7; j++)
-//							{
-//								System.out.print("| " + board.array[j][k] + " ");
-//							}
-//							System.out.println("|");
-//							System.out.println("-----------------------------");
-//						}
-						//validMoves++ ;
-					//}
-//					for (int j = 0; j < fullColumn.length; j++) 
-//					{
-//						if (fullColumn[j] == i)
-//						{
-//							//int length;
-//							i = i + 1;
-//							
-//						}
-//					}	
-//					length = board.getAvailableCells(i);
-//					newMinimizer.ChildrenArray[length] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
+
+					newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
 					
 				}
-				//newMinimizer.setChildrenSize(validMoves);
 				return newMinimizer;
 			}
 			
 			
 			else
 			{
-//				newMinimizer = new MinimizerNode();
 				int validMoves = 0;
 				int pos = -10;
-				//newMinimizer.SetValue(random.nextInt(10));
-				
-				//newMinimizer.setChildrenSize(7);
 	            for(int i = 0; i < 7; i++)
 	            {
 	                if(board.isValid(i))
@@ -191,78 +118,13 @@ public class Tree
 				
 				for(int i = 0; i < 7; i++)
 				{
-					//if(board.isValid(i))
-					//{		
-					
-//					for (int j = 0; j < fullColumn.length; j++) 
-//					{
-//						if (fullColumn[j] != i)
-//						{
-//							//int length;
-//							length = board.getAvailableCells(i);
-//							newMaximizer.ChildrenArray[length] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
-//						}
-//					}	
-					
-						//validMoves++ ;
-					//}
-					//canvas newBoard = board;
-					//canvas newBoard = board;
-					//newBoard.insertPlayer(i);
-//					int k = i;
-//					for (int j = 0; j < fullColumn.length; j++) 
-//					{
-//						if (fullColumn[j] == k)
-//						{
-//							//System.out.print(fullColumn[j]);
-//							if(k < 6)
-//								k = k + 1;
-//							//break;
-//						}
-//					}	
-					//if(k < 7)
-					//{
-						//canvas newBoard = board;
-						//newBoard.insertAI(k);
-						
-						//newMaximizer.move = k;
-						newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
-						
-						//board.removeMove(k);
-						//newBoard.removeMove(k);
-					//}
+
+					newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer, board, length);
 					
 				}
-				//newMinimizer.setChildrenSize(validMoves);
 				return newMaximizer;
 			}
-		}
-		
-		
-
-		
-//		for(int i = 0; i < 7; i++)
-//		{
-//			
-//			if(isMaximizer)
-//			{
-//				//if(newMinimizer.ChildrenArray != null)
-//					newMinimizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
-//				
-//			}
-//			else
-//			{
-//				//if(newMinimizer.ChildrenArray != null)
-//					newMaximizer.ChildrenArray[i] = TreeDepthCreate(depth - 1, checkMaximizer);
-//			}
-//		}
-//		
-//		if(isMaximizer)
-//			return newMinimizer;
-//		else
-//			return newMaximizer;
-		
-		
+		}	
 	}
 	
 	// Constructor that has input a String in JSON Format
@@ -392,16 +254,12 @@ public class Tree
 		}
 		
 	}
+
 	
-	
-	
-	
-	// na kano kapos anadromika na ftanei sta fila kai ekei na trexei tis 7 periptoseis kai paralila na exo ena copy tou canva kai na kano tis kiniseis mexri ekei
 	public void addEvaluation(TreeLeaves node, canvas newCanvas, canvas currentCanvas, int pos)
 	{
 		MaximizerNode Maximizer;
 		MinimizerNode Minimizer;
-		//int pos = -1;
 		
 		if(node == null)
 			return;
@@ -411,19 +269,14 @@ public class Tree
 			Maximizer = (MaximizerNode) node;
 			for (int i = 0; i < Maximizer.getChildrenSize(); i++)
 			{
-				// play i;
-				if(newCanvas.isValid(i))		// check if the move is valid otherwise dont put the node;
-				{								// isos na thelei by default oi komvoi na exoyn -2000 timi kai oxi 0
+				if(newCanvas.isValid(i))		
+				{							
 					newCanvas.insertAI(i);
 					pos = i;
 					Maximizer.visited = 1;
 					addEvaluation(Maximizer.ChildrenArray[i], newCanvas, currentCanvas, pos);
 					newCanvas.removeMove(i);
 				}
-//				else
-//				{
-//					Maximizer.setChildrenSize(0);
-//				}
 			}
 		} 
 		
@@ -432,7 +285,6 @@ public class Tree
 			Minimizer = (MinimizerNode) node;
 			for (int i = 0; i < Minimizer.getChildrenSize(); i++)
 			{
-				// play i;
 				if(newCanvas.isValid(i))
 				{					
 					newCanvas.insertPlayer(i);
@@ -441,36 +293,14 @@ public class Tree
 					addEvaluation(Minimizer.ChildrenArray[i], newCanvas, currentCanvas, pos);
 					newCanvas.removeMove(i);
 				}
-//				else
-//				{
-//					 Minimizer.setChildrenSize(0);
-//				}
 			}
 		}
 		
 		else
 		{
-			// eimaste se filo
-			//if(pos >= 0)
-			//{
-				//if(newCanvas.isValid(pos))
-				//{
-					//int evaluationValue = 0;
-					//node.SetValue(newCanvas.evaluate());
-					node.SetValue(newCanvas.evaluateTwo());
-					//if(pos >= 0)
-						node.setMove(pos);
-						node.visited = 1;
-				//}
-			//}
-			
-			//System.out.println(node.getValue());
-			//newCanvas.removeMove(pos);
-			//newCanvas = currentCanvas;
+			node.SetValue(newCanvas.evaluateTwo());
+			node.visited = 1;
 		}
-		//return currentCanvas;
-		//newCanvas.removeMove(pos);
-		
 	}
 	
 	

@@ -1,4 +1,4 @@
-package hw3_package;
+package ce326.hw3;
 
 import javax.print.DocFlavor.CHAR_ARRAY;
 
@@ -15,7 +15,7 @@ public class MinimizerNode extends TreeNode
 		double min = super.ChildrenArray[0].getValue();
 		for (int i = 0; i < super.ChildrenArray.length; i++)
 		{
-			if(ChildrenArray[i].visited == 1)
+			if(ChildrenArray[i].visited == 1)	// only if is visited
 			{				
 				if(ChildrenArray[i].getValue() <= min)
 				{

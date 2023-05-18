@@ -1,4 +1,4 @@
-package hw3_package;
+package ce326.hw3;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,10 +10,7 @@ import javax.swing.*;
 public class CircleArea extends JComponent 
 {
 
-    /**
-	 * 
-	 */
-	public static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;		// it creates this
 	final static int ROWS = 6;
     final static int COLUMNS = 7;
     private final int CIRCLE_DIAMETER = 100;
@@ -29,23 +26,27 @@ public class CircleArea extends JComponent
     {
         circleColors = new Color[ROWS][COLUMNS];
         // Initialize all circles to white
-        for (int row = 0; row < ROWS; row++) {
-            for (int column = 0; column < COLUMNS; column++) {
+        for (int row = 0; row < ROWS; row++) 
+        {
+            for (int column = 0; column < COLUMNS; column++) 
+            {
                 circleColors[row][column] = Color.WHITE;
             }
             
         }
-        addMouseListener(new MouseAdapter() 
-        {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = e.getY() / CELL_SIZE;
-                int col = e.getX() / CELL_SIZE;
-                if (row >= 0 && row < ROWS && col >= 0 && col < COLUMNS) {
-                    setCircleColor(row, col, Color.RED); // Change the color of the clicked circle to red
-                }
-            }
-        });
+//        addMouseListener(new MouseAdapter() 
+//        {
+//            @Override
+//            public void mouseClicked(MouseEvent e) 
+//            {
+//                int row = e.getY() / CELL_SIZE;
+//                int col = e.getX() / CELL_SIZE;
+//                if (row >= 0 && row < ROWS && col >= 0 && col < COLUMNS) 
+//                {
+//                    setCircleColor(row, col, Color.RED); // Change the color of the clicked circle to red
+//                }
+//            }
+//        });
     }
     
     public void setCircleColor(int row, int column, Color color) 
@@ -62,7 +63,8 @@ public class CircleArea extends JComponent
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) 
+    {
         super.paintComponent(g);
 
         // Draw the border around the circles
@@ -95,7 +97,8 @@ public class CircleArea extends JComponent
     
     
     @Override
-    public Dimension getPreferredSize() {
+    public Dimension getPreferredSize() 
+    {
         // Calculate the preferred size based on the number of rows and columns
         int width = COLUMNS * (CIRCLE_DIAMETER + CIRCLE_GAP) - CIRCLE_GAP + 2 * BORDER_SIZE;
         int height = ROWS * (CIRCLE_DIAMETER + CIRCLE_GAP) - CIRCLE_GAP + 2 * BORDER_SIZE;

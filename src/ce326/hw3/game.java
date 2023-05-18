@@ -1,26 +1,20 @@
-package hw3_package;
+package ce326.hw3;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.*;
 
 public class game
 {
 	int difficulty = 5;
 	int player = 0;
-	canvas kati = new canvas(); 	// dokimi gia tin klasi tou pinaka
+	canvas kati = new canvas();
 	int winCondition = 0;
 	int b = -1, d = -1;
 	
-//	File file;
-//	String Filepath = "C:\\Users\\jimar\\Desktop\\Uni\\6th_semester\\Objective Programming\\hw3-objective-oriented-prog\\test.dot";
-//	file = new File(Filepath);
 	
-	
-	public game()
+	public game(canvas board)
 	{
-		
+		kati = board;
 	}
 	
 	public void clear()
@@ -53,16 +47,16 @@ public class game
 		
 		kati.insertPlayer(a);
 		
-		System.out.println("Player");
-		for (int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < 7; j++)
-			{
-				System.out.print("| " + kati.array[j][i] + " ");
-			}
-			System.out.println("|");
-			System.out.println("-----------------------------");
-		}
+//		System.out.println("Player");
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + kati.array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
 		
 		winCondition = kati.checkWin();
 		if(winCondition == 1)
@@ -87,7 +81,6 @@ public class game
 
 		
 		int winCondition;
-		String whoPlays = new String();
 		
 		switch(player)
 		{
@@ -102,27 +95,25 @@ public class game
 					
 					kati.insertPlayer(a);
 					
-					System.out.println("Player");
-					for (int i = 0; i < 6; i++)
-					{
-						for (int j = 0; j < 7; j++)
-						{
-							System.out.print("| " + kati.array[j][i] + " ");
-						}
-						System.out.println("|");
-						System.out.println("-----------------------------");
-					}
+//					System.out.println("Player");
+//					for (int i = 0; i < 6; i++)
+//					{
+//						for (int j = 0; j < 7; j++)
+//						{
+//							System.out.print("| " + kati.array[j][i] + " ");
+//						}
+//						System.out.println("|");
+//						System.out.println("-----------------------------");
+//					}
 					
 					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
-						System.out.println("Winner: AI");
-						return;
+						//System.out.println("Winner: AI");
 					}
 					else if(winCondition == 2)
 					{
-						System.out.println("Winner: Player");
-						return;
+						//System.out.println("Winner: Player");
 					}
 					
 					
@@ -146,27 +137,24 @@ public class game
 						kati.insertAI(b);
 					
 					System.out.println("AI");
-					for (int i = 0; i < 6; i++)
-					{
-						for (int j = 0; j < 7; j++)
-						{
-							System.out.print("| " + kati.array[j][i] + " ");
-						}
-						System.out.println("|");
-						System.out.println("-----------------------------");
-					}
-					
-					//winCondition = kati.checkWin();
+//					for (int i = 0; i < 6; i++)
+//					{
+//						for (int j = 0; j < 7; j++)
+//						{
+//							System.out.print("| " + kati.array[j][i] + " ");
+//						}
+//						System.out.println("|");
+//						System.out.println("-----------------------------");
+//					}
+	
 					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
-						System.out.println("Winner: AI");
-						return;
+						//System.out.println("Winner: AI");
 					}
 					else if(winCondition == 2)
 					{
-						System.out.println("Winner: Player");
-						return;
+						//System.out.println("Winner: Player");
 					}
 					
 				}
@@ -205,7 +193,6 @@ public class game
 						System.out.println("-----------------------------");
 					}
 					
-					//winCondition = kati.checkWin();
 					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
@@ -240,12 +227,10 @@ public class game
 					if(winCondition == 1)
 					{
 						System.out.println("Winner: AI");
-						return;
 					}
 					else if(winCondition == 2)
 					{
 						System.out.println("Winner: Player");
-						return;
 					}
 				}
 			}
@@ -257,12 +242,12 @@ public class game
 	}
 	
 	
-	public void playAI(canvas kati)
+	public void playAI()
 	{
 		TreeAdvanced newTree;
 		canvas newCanvas;
 		newTree = new TreeAdvanced(difficulty, kati);
-		System.out.println("The size of tree is: " + newTree.size());
+		//System.out.println("The size of tree is: " + newTree.size());
 		newCanvas = kati;
 		int pos = -1;
 		newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
@@ -274,105 +259,81 @@ public class game
 		optPath = newTree.optimalPath();
 		
 		b = optPath.get(0);
-		System.out.println("First move is: "+b+"      ");
+		//System.out.println("First move is: "+b+"      ");
 		
 		if(b >= 0 && b <= 6)
 			d = kati.insertAI(b);
 		
-		System.out.println("AI");
-		for (int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < 7; j++)
-			{
-				System.out.print("| " + kati.array[j][i] + " ");
-			}
-			System.out.println("|");
-			System.out.println("-----------------------------");
-		}
-		
-		//winCondition = kati.checkWin();
-		winCondition = kati.checkWin();
-		if(winCondition == 1)
-		{
-			System.out.println("Winner: AI");
-			return;
-		}
-		else if(winCondition == 2)
-		{
-			System.out.println("Winner: Player");
-			return;
-		}
-		
-//		try {
-//		newTree.toDotFile(file);
-//	} catch (TreeExceptions e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-	}
-	
-	
-	public void playPlayer(canvas kati)
-	{
-		TreeAdvanced newTree;
-		canvas newCanvas;
-		newTree = new TreeAdvanced(difficulty, kati);
-		System.out.println("The size of tree is: " + newTree.size());
-		newCanvas = kati;
-		int pos = -1;
-		newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
-		
-		
-		newTree.minMax();
-		newTree.isMinMax = true;
-		ArrayList<Integer> optPath = new ArrayList<Integer>(0);
-		optPath = newTree.optimalPath();
-		
-		b = optPath.get(0);
-		System.out.println("First move is: "+b+"      ");
-		
-		if(b >= 0 && b <= 6)
-			d = kati.insertAI(b);
-		
-		System.out.println("AI");
-		for (int i = 0; i < 6; i++)
-		{
-			for (int j = 0; j < 7; j++)
-			{
-				System.out.print("| " + kati.array[j][i] + " ");
-			}
-			System.out.println("|");
-			System.out.println("-----------------------------");
-		}
-		
-		//winCondition = kati.checkWin();
-		winCondition = kati.checkWin();
-		if(winCondition == 1)
-		{
-			System.out.println("Winner: AI");
-			return;
-		}
-		else if(winCondition == 2)
-		{
-			System.out.println("Winner: Player");
-			return;
-		}
-	}
-	
-//	@Override
-//	public void run() 
-//	{
-//		// TODO Auto-generated method stub
-//		//start();
-//		while(true)
+//		System.out.println("AI");
+//		for (int i = 0; i < 6; i++)
 //		{
-//			while(x.isLocked() == false)
+//			for (int j = 0; j < 7; j++)
 //			{
-//				insertPlayer(0);
-//				
+//				System.out.print("| " + kati.array[j][i] + " ");
 //			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
 //		}
-//		
-//	}
+		
+		winCondition = kati.checkWin();
+		if(winCondition == 1)
+		{
+			//System.out.println("Winner: AI");
+			return;
+		}
+		else if(winCondition == 2)
+		{
+			//System.out.println("Winner: Player");
+			return;
+		}
+		return;
+	}
+	
+	
+	public void playPlayer()
+	{
+		TreeAdvanced newTree;
+		canvas newCanvas;
+		newTree = new TreeAdvanced(difficulty, kati);
+		//System.out.println("The size of tree is: " + newTree.size());
+		newCanvas = kati;
+		int pos = -1;
+		newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
+		
+		
+		newTree.minMax();
+		newTree.isMinMax = true;
+		ArrayList<Integer> optPath = new ArrayList<Integer>(0);
+		optPath = newTree.optimalPath();
+		
+		b = optPath.get(0);
+		//System.out.println("First move is: "+b+"      ");
+		
+		if(b >= 0 && b <= 6)
+			d = kati.insertAI(b);
+		
+//		System.out.println("AI");
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + kati.array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
+		
+		winCondition = kati.checkWin();
+		if(winCondition == 1)
+		{
+			//System.out.println("Winner: AI");
+			return;
+		}
+		else if(winCondition == 2)
+		{
+			//System.out.println("Winner: Player");
+			return;
+		}
+	}
 	
 }

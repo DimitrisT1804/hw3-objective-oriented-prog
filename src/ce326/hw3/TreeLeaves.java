@@ -1,4 +1,4 @@
-package hw3_package;
+package ce326.hw3;
 
 /* This is the class of the tree leaves */
 
@@ -6,7 +6,6 @@ public class TreeLeaves
 {
 	private double NodeValue; 		// it is private
 	public boolean isPruned = false;
-	int move = -2;
 	int visited = 0;
 	
 	// Constructor
@@ -30,10 +29,5 @@ public class TreeLeaves
 	public void SetValue(double NodeValue)
 	{
 		this.NodeValue = NodeValue;
-	}
-	
-	public void setMove(int newMove)
-	{
-		move = newMove;
 	}
 }

@@ -1,4 +1,4 @@
-package hw3_package;
+package ce326.hw3;
 
 public class TreeNode extends TreeLeaves
 {

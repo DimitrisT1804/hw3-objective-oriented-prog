@@ -1,4 +1,4 @@
-package hw3_package;
+package ce326.hw3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
