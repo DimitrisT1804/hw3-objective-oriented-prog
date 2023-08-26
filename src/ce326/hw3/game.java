@@ -71,6 +71,14 @@ public class game
 		}
 	}
 	
+	public void instertAI(int a)
+	{
+		if(a > 6)
+			System.out.println("ERROR");
+		
+		kati.insertAI(a);
+	}
+	
 	
 	public void start()
 	{

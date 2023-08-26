@@ -1,9 +1,21 @@
 package ce326.hw3;
 
 import java.awt.*;
+
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.Border;
+
+import org.json.*;
+import java.io.*;
+import java.util.*;
+
+import java.util.concurrent.TimeUnit;
+import java.util.Date;
+
+import javax.swing.Timer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GUI
 {
@@ -13,6 +25,10 @@ public class GUI
 	JPanel panel = new JPanel();
 	canvas board = new canvas();
 	game newGame = new game(board);
+	
+	JSONObject jsonObject = new JSONObject();
+	
+	JSONArray movementsArray = new JSONArray();
 	
 	int a = 0;
 	int wining = 0;
@@ -127,6 +143,15 @@ public class GUI
 				circleArea.repaint();
 				board.clear();
 				newGame.difficulty = 5;
+				
+				/*new implement */
+				
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+				String time = dateFormat.format(new Date());
+				
+				jsonObject.put("start time ", time);
+				
 				if(rdbtnNewRadioButton.isSelected())
 				{		
 					newGame.clear();
@@ -177,6 +202,18 @@ public class GUI
 	    
 	    JMenu mnNewMenu_2 = new JMenu("History");
 	    menuBar.add(mnNewMenu_2);
+	    JMenuItem HistoryButton = new JMenuItem("Show History");
+	    mnNewMenu_2.add(HistoryButton);
+	    
+	    HistoryButton.addActionListener(new ActionListener()
+	    {
+	    	@Override
+	    	public void actionPerformed(ActionEvent e)
+	    	{
+	    		System.out.println("History menu clicked!");
+	    		readHistory("/home/dimitris/Desktop/Objective Programming/hw3-objective-oriented-prog/output.json");
+	    	}
+	    });
 	    
 	    JMenu mnNewMenu_3 = new JMenu("Help");	    
 	    menuBar.add(mnNewMenu_3);
@@ -410,6 +447,10 @@ public class GUI
 		    	  a = MousePos;
 		    	  int c = board.insertPlayer(a);
 		    	  circleArea.setCircleColor(c, a, Color.RED);
+		    	  
+		    	  writeHistory(movementsArray , 1, a);
+		    	  
+		    	  
 		    	  board.flag = 0;
 		    	  wining = board.checkWin();
 		    	  
@@ -419,25 +460,14 @@ public class GUI
 		    		  wining = 0;
 		    		  winConditionHandle();
 		    		  
-		    		  return;
-		    	  }
-		    	  else if (newGame.winCondition == 2)
-		    	  {
-		    		  JOptionPane.showMessageDialog(frame, "Winner: Player!");
-		    		  wining = 0;
-		    		  winConditionHandle();
-		    		  return;
-		    	  }
-		    	  circleArea.repaint();
-		    	  newGame.playAI();
-		    	  circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
-		    	  circleArea.repaint();
-		    	  
-		    	  if(newGame.winCondition == 1)
-		    	  {
-		    		  JOptionPane.showMessageDialog(frame, "Winner: AI!");
-		    		  wining = 0;
-		    		  winConditionHandle();
+						jsonObject.put("movements", movementsArray);
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
 		    		  
 		    		  return;
 		    	  }
@@ -446,6 +476,56 @@ public class GUI
 		    		  JOptionPane.showMessageDialog(frame, "Winner: Player!");
 		    		  wining = 0;
 		    		  winConditionHandle();
+						jsonObject.put("movements", movementsArray);
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
+		    		  
+		    		  return;
+		    	  }
+		    	  circleArea.repaint();
+		    	  newGame.playAI();
+		    	  circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
+		    	  
+		    	  writeHistory(movementsArray , 2, newGame.b);
+		    	  
+		    	  circleArea.repaint();
+		    	  
+		    	  if(newGame.winCondition == 1)
+		    	  {
+		    		  JOptionPane.showMessageDialog(frame, "Winner: AI!");
+		    		  wining = 0;
+		    		  winConditionHandle();
+		    		  
+						jsonObject.put("movements", movementsArray);
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
+		    		  
+		    		  return;
+		    	  }
+		    	  else if (newGame.winCondition == 2)
+		    	  {
+		    		  JOptionPane.showMessageDialog(frame, "Winner: Player!");
+		    		  wining = 0;
+		    		  winConditionHandle();
+		    		  
+						jsonObject.put("movements", movementsArray);
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
 		    		  return;
 		    	  }
 			}
@@ -478,4 +558,62 @@ public class GUI
 		circleArea.removeMouseListener(MouseClicked);
 		circleArea.removeMouseMotionListener(Mouseadapter);
 	}	
+	
+	
+	
+	public void readHistory(String filename)		// reads and shows the history from the JSON FILE
+	{
+		try(FileReader fileReader = new FileReader(filename))
+		{
+			JSONTokener tokener = new JSONTokener(fileReader);
+			JSONObject jsonObject = new JSONObject(tokener);
+			
+            //String startTime = jsonObject.getString("start_time");
+            //System.out.println("Start Time: " + startTime);
+			
+            JSONArray movementsArray = jsonObject.getJSONArray("movements");
+
+            Timer displayTimer = new Timer(3000, new ActionListener() 
+            {
+            	private int currentIndex = movementsArray.length() - 1; 
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (currentIndex >= 0) {
+                        JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
+                        int player = jsonMovement.getInt("player");
+                        int column = jsonMovement.getInt("column");
+
+                        if (player == 1) {
+                            int c = board.insertPlayer(column);
+                            circleArea.setCircleColor(c, column, Color.RED);
+                        } else if (player == 2) {
+                            int c = board.insertAI(column);
+                            circleArea.setCircleColor(c, column, Color.YELLOW);
+                        }
+
+                        circleArea.repaint();
+                        panel.repaint();
+                        frame.repaint();
+
+                        currentIndex--;
+                    } else {
+                        ((Timer) e.getSource()).stop();
+                    }
+                }
+            });
+            
+            displayTimer.setInitialDelay(0); // Start immediately
+            displayTimer.start();
+        } catch (IOException e3) {
+            e3.printStackTrace();
+        }
+
+	}
+	
+	public void writeHistory(JSONArray movementsArray ,int player, int column)
+	{		
+		//JSONArray movementsArray = new JSONArray();
+		movementsArray.put(new JSONObject().put("player", player).put("column", column));
+	}
 }
