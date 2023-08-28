@@ -98,7 +98,6 @@ public class GUI
 					frame.removeKeyListener(KeyListenerPlayer);
 					runningPlayer();
 				}
-				
 			}
 		});
 	    
@@ -211,7 +210,60 @@ public class GUI
 	    	public void actionPerformed(ActionEvent e)
 	    	{
 	    		System.out.println("History menu clicked!");
-	    		readHistory("/home/dimitris/Desktop/Objective Programming/hw3-objective-oriented-prog/output.json");
+	    		
+				newGame.clear();
+				circleArea.clear();
+				circleArea.repaint();
+				board.clear();
+				
+				DefaultListModel<String> listModel = new DefaultListModel<>();
+				
+//	            listModel.addElement("Item 1 kai kati allo gia na tsekaro ti fasi me ton xoro");
+//	            listModel.addElement("Item 2");
+//	            listModel.addElement("Item 3");
+//	            listModel.addElement("Item 4");
+//	            listModel.addElement("Item 5");
+//	            listModel.addElement("Item 6");
+//	            listModel.addElement("Item 7");
+//	            listModel.addElement("Item 8");
+//	            listModel.addElement("Item 9");
+//	            listModel.addElement("Item 10");
+//	            listModel.addElement("Item 11");
+//	            listModel.addElement("Item 12");
+	            
+	            File directory = new File("./");
+	            if(directory.isDirectory())
+	            {
+	            	File[] files = directory.listFiles();
+	            	
+	            	if(files != null)
+	            	{
+	            		for(File file : files)
+	            		{
+	            			if(file.isFile())
+	            				listModel.addElement(file.getName());
+	            		}
+	            	}
+	            	
+	            	
+	            }
+				
+				JList historyList = new JList<>(listModel);
+				
+				panel.remove(circleArea);
+				
+	            panel.add(new JScrollPane(historyList), BorderLayout.CENTER);
+
+	            // Add your panel to the frame
+	            frame.add(panel);
+
+	            // Set the size of the frame
+	            //frame.setSize(600, 600);
+
+	            // Make the frame visible
+	            frame.setVisible(true);
+	    		
+	    		readHistory("/home/dimitris/Desktop/ce326/hw3-objective-oriented-prog/output.json");
 	    	}
 	    });
 	    
@@ -244,6 +296,7 @@ public class GUI
 				else
 				{
 					int c = board.insertPlayer(a);
+					writeHistory(movementsArray , 1, a);
 					wining = board.checkWin();
 					circleArea.setCircleColor(c, a, Color.RED);
 					
@@ -252,6 +305,18 @@ public class GUI
 						JOptionPane.showMessageDialog(frame, "Winner: AI!");
 						wining = 0;
 						winConditionHandlePlayer();
+						
+						jsonObject.put("movements", movementsArray);
+						
+						jsonObject.put("Winner ", "AI");
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
+						
 						return;
 					}
 					else if (wining == 2)
@@ -259,10 +324,21 @@ public class GUI
 						JOptionPane.showMessageDialog(frame, "Winner: Player!");
 						wining = 0;
 						winConditionHandlePlayer();
+						
+						jsonObject.put("movements", movementsArray);
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
+						
 						return;
 					}
 					
 					newGame.playAI();
+					writeHistory(movementsArray , 2, newGame.b);
 					
 					circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
 					circleArea.repaint();
@@ -274,6 +350,17 @@ public class GUI
 						wining = 0;
 						winConditionHandlePlayer();
 						
+						jsonObject.put("movements", movementsArray);
+						
+						jsonObject.put("Winner ", "AI");
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
+						
 						return;
 					}
 					else if (wining == 2)
@@ -281,6 +368,16 @@ public class GUI
 						JOptionPane.showMessageDialog(frame, "Winner: Player!");
 						wining = 0;
 						winConditionHandlePlayer();
+						
+						jsonObject.put("movements", movementsArray);
+						
+						// Write JSON to a file
+						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+						} catch (IOException e4) {
+						    e4.printStackTrace();
+						}
+						
 						return;
 					}
 				}
@@ -330,6 +427,7 @@ public class GUI
 			{
 				int c = board.insertPlayer(a);
 				circleArea.setCircleColor(c, a, Color.RED);
+				writeHistory(movementsArray , 1, a);
 				board.flag = 0;
 				wining = board.checkWin();
 				
@@ -339,6 +437,15 @@ public class GUI
 					wining = 0;
 					winConditionHandle();
 					
+					jsonObject.put("movements", movementsArray);
+					
+					// Write JSON to a file
+					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+					} catch (IOException e4) {
+					    e4.printStackTrace();
+					}
+					
 					return;
 				}
 				else if (newGame.winCondition == 2)
@@ -346,10 +453,21 @@ public class GUI
 					JOptionPane.showMessageDialog(frame, "Winner: Player!");
 					wining = 0;
 					winConditionHandle();
+					
+					jsonObject.put("movements", movementsArray);
+					
+					// Write JSON to a file
+					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+					} catch (IOException e4) {
+					    e4.printStackTrace();
+					}
+					
 					return;
 				}
 				//circleArea.repaint();
 				newGame.playAI();
+				writeHistory(movementsArray , 2, newGame.b);
 				circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
 				circleArea.repaint();
 				wining = board.checkWin();
@@ -360,6 +478,17 @@ public class GUI
 					wining = 0;
 					winConditionHandle();
 					
+					jsonObject.put("movements", movementsArray);
+					
+					jsonObject.put("Winner ", "AI");
+					
+					// Write JSON to a file
+					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+					} catch (IOException e4) {
+					    e4.printStackTrace();
+					}
+					
 					return;
 				}
 				else if (newGame.winCondition == 2)
@@ -367,6 +496,16 @@ public class GUI
 					JOptionPane.showMessageDialog(frame, "Winner: Player!");
 					wining = 0;
 					winConditionHandle();
+					
+					jsonObject.put("movements", movementsArray);
+					
+					// Write JSON to a file
+					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+					} catch (IOException e4) {
+					    e4.printStackTrace();
+					}
+					
 					return;
 				}
 			}
