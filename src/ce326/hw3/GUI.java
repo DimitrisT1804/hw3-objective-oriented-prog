@@ -17,6 +17,9 @@ import javax.swing.Timer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 public class GUI
 {
 
@@ -29,6 +32,9 @@ public class GUI
 	JSONObject jsonObject = new JSONObject();
 	
 	JSONArray movementsArray = new JSONArray();
+	
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss");
+	String time = dateFormat.format(new Date());
 	
 	int a = 0;
 	int wining = 0;
@@ -146,8 +152,8 @@ public class GUI
 				/*new implement */
 				
 				
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-				String time = dateFormat.format(new Date());
+//				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//				String time = dateFormat.format(new Date());
 				
 				jsonObject.put("start time ", time);
 				
@@ -231,7 +237,9 @@ public class GUI
 //	            listModel.addElement("Item 11");
 //	            listModel.addElement("Item 12");
 	            
-	            File directory = new File("./");
+
+				File directory = new File("output");
+
 	            if(directory.isDirectory())
 	            {
 	            	File[] files = directory.listFiles();
@@ -241,7 +249,11 @@ public class GUI
 	            		for(File file : files)
 	            		{
 	            			if(file.isFile())
-	            				listModel.addElement(file.getName());
+	            			{
+	            				if(file.getName().contains(".json"))
+	            					listModel.addElement(file.getName());
+	            				
+	            			}
 	            		}
 	            	}
 	            	
@@ -252,7 +264,9 @@ public class GUI
 				
 				panel.remove(circleArea);
 				
-	            panel.add(new JScrollPane(historyList), BorderLayout.CENTER);
+				JScrollPane scroll = new JScrollPane(historyList);
+				
+	            panel.add(scroll, BorderLayout.CENTER);
 
 	            // Add your panel to the frame
 	            frame.add(panel);
@@ -262,8 +276,33 @@ public class GUI
 
 	            // Make the frame visible
 	            frame.setVisible(true);
+				
+	            historyList.addListSelectionListener(new ListSelectionListener() 
+	            {
+					
+					@Override
+					public void valueChanged(ListSelectionEvent e) 
+					{
+						// TODO Auto-generated method stub
+	                    if (!e.getValueIsAdjusting()) 
+	                    {
+	                        String selectedValue = historyList.getSelectedValue().toString();
+	                        System.out.println("Selected: " + selectedValue);
+	                        
+	                        panel.remove(scroll);
+	                        panel.add(circleArea);
+	                        frame.add(panel);
+	                        frame.setVisible(true);
+	                        
+	                        readHistory("k a t i .json");
+	                    }
+						
+					}
+				});
+				
+	
 	    		
-	    		readHistory("/home/dimitris/Desktop/ce326/hw3-objective-oriented-prog/output.json");
+	    		//readHistory(selected);
 	    	}
 	    });
 	    
@@ -311,7 +350,10 @@ public class GUI
 						jsonObject.put("Winner ", "AI");
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+//						String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+						
+						try (FileWriter fileWriter = new FileWriter(JsonName)) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
@@ -328,7 +370,9 @@ public class GUI
 						jsonObject.put("movements", movementsArray);
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
+						
+						try (FileWriter fileWriter = new FileWriter(JsonName)) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
@@ -355,7 +399,9 @@ public class GUI
 						jsonObject.put("Winner ", "AI");
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: AI"+".json";
+						
+						try (FileWriter fileWriter = new FileWriter(JsonName)) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
@@ -372,7 +418,9 @@ public class GUI
 						jsonObject.put("movements", movementsArray);
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
+						
+						try (FileWriter fileWriter = new FileWriter(JsonName)) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
@@ -440,7 +488,9 @@ public class GUI
 					jsonObject.put("movements", movementsArray);
 					
 					// Write JSON to a file
-					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: AI"+".json";
+					
+					try (FileWriter fileWriter = new FileWriter(JsonName)) {
 					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 					} catch (IOException e4) {
 					    e4.printStackTrace();
@@ -457,7 +507,9 @@ public class GUI
 					jsonObject.put("movements", movementsArray);
 					
 					// Write JSON to a file
-					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
+					
+					try (FileWriter fileWriter = new FileWriter(JsonName)) {
 					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 					} catch (IOException e4) {
 					    e4.printStackTrace();
@@ -483,7 +535,9 @@ public class GUI
 					jsonObject.put("Winner ", "AI");
 					
 					// Write JSON to a file
-					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: AI"+".json";
+					
+					try (FileWriter fileWriter = new FileWriter(JsonName)) {
 					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 					} catch (IOException e4) {
 					    e4.printStackTrace();
@@ -500,7 +554,9 @@ public class GUI
 					jsonObject.put("movements", movementsArray);
 					
 					// Write JSON to a file
-					try (FileWriter fileWriter = new FileWriter("output.json")) {
+					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
+					
+					try (FileWriter fileWriter = new FileWriter(JsonName)) {
 					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 					} catch (IOException e4) {
 					    e4.printStackTrace();
@@ -602,7 +658,7 @@ public class GUI
 						jsonObject.put("movements", movementsArray);
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
@@ -618,7 +674,7 @@ public class GUI
 						jsonObject.put("movements", movementsArray);
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
@@ -643,7 +699,7 @@ public class GUI
 						jsonObject.put("movements", movementsArray);
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
@@ -660,7 +716,7 @@ public class GUI
 						jsonObject.put("movements", movementsArray);
 						
 						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output.json")) {
+						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
 						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
 						} catch (IOException e4) {
 						    e4.printStackTrace();
