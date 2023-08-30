@@ -47,8 +47,11 @@ public class CircleArea extends JComponent
     
     public void setCircleColor(int row, int column, Color color) 
     {
-        circleColors[row][column] = color;
-        repaint();
+    	if(column != -1 && row != -1)
+    	{
+    		circleColors[row][column] = color;
+    		repaint();    		
+    	}
     }
     
 

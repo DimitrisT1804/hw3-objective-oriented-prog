@@ -36,10 +36,47 @@ public class GUI
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss");
 	String time = dateFormat.format(new Date());
 	
+	history newHistory = new history();
+	
+	DefaultListModel<String> listModel = new DefaultListModel<>();
+	
+	JList historyList = new JList<>(listModel);
+	
+	JScrollPane scroll = new JScrollPane(historyList);
+	
+	private boolean isReplaying = false;
+	
 	int a = 0;
 	int wining = 0;
 	int mouseClicked = 0;
 	int MousePos = -1;
+	
+	ListSelectionListener listListener = new ListSelectionListener() 
+    {
+		
+		@Override
+		public void valueChanged(ListSelectionEvent e) 
+		{
+			// TODO Auto-generated method stub
+            if (!e.getValueIsAdjusting()) 
+            {
+                String selectedValue = historyList.getSelectedValue().toString();
+                System.out.println("Selected: " + selectedValue);
+                
+                panel.remove(scroll);
+                panel.add(circleArea);
+                frame.add(panel);
+                frame.setVisible(true);
+                
+                selectedValue = "output/"+selectedValue;
+                
+                isReplaying = true;
+                
+                readHistory(selectedValue);
+            }
+			
+		}
+    };
 
 	public GUI() 
 	{
@@ -89,10 +126,18 @@ public class GUI
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				newGame.clear();
+				board = new canvas();
+				newGame = new game(board);
 				circleArea.clear();
 				circleArea.repaint();
-				board.clear();
+				
+				panel.remove(scroll);
+                panel.add(circleArea);
+                frame.add(panel);
+                frame.setVisible(true);
+                
+                stopReplay();
+				
 				newGame.difficulty = 1;
 				if(rdbtnNewRadioButton.isSelected())
 				{	
@@ -115,10 +160,19 @@ public class GUI
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				newGame.clear();
+				board = new canvas();
+				newGame = new game(board);
 				circleArea.clear();
 				circleArea.repaint();
-				board.clear();
+				
+				panel.remove(scroll);
+                panel.add(circleArea);
+                frame.add(panel);
+                frame.setVisible(true);
+                
+                stopReplay();
+				
+				
 				newGame.difficulty = 3;
 				if(rdbtnNewRadioButton.isSelected())
 				{	
@@ -143,10 +197,27 @@ public class GUI
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				newGame.clear();
+//				newGame.clear();
+//				circleArea.clear();
+//				circleArea.repaint();
+//				board.clear();
+//				newGame.difficulty = 5;
+				
+				historyList.removeListSelectionListener(listListener);;
+				
+				board = new canvas();
+				newGame = new game(board);
 				circleArea.clear();
 				circleArea.repaint();
-				board.clear();
+				
+				panel.remove(scroll);
+                panel.add(circleArea);
+                frame.add(panel);
+                frame.setVisible(true);
+                
+                stopReplay();
+				
+				
 				newGame.difficulty = 5;
 				
 				/*new implement */
@@ -155,7 +226,7 @@ public class GUI
 //				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 //				String time = dateFormat.format(new Date());
 				
-				jsonObject.put("start time ", time);
+				//jsonObject.put("start time ", time);
 				
 				if(rdbtnNewRadioButton.isSelected())
 				{		
@@ -163,11 +234,20 @@ public class GUI
 					board.clear();
 					//mntmNewMenuItem_1.removeActionListener(mntmNewMenuItem_1.getActionListeners()[0]);
 					frame.removeKeyListener(keyListener);
+					circleArea.removeMouseListener(MouseClicked);
+					circleArea.removeMouseMotionListener(Mouseadapter);
+					
 					running_AI();
 				}
 				else if (rdbtnNewRadioButton_1.isSelected())
 				{
+					newGame.clear();
+					board.clear();
+					
 					frame.removeKeyListener(KeyListenerPlayer);
+					circleArea.removeMouseListener(MouseClicked);
+					circleArea.removeMouseMotionListener(Mouseadapter);
+					
 					runningPlayer();
 				}
 				
@@ -186,7 +266,7 @@ public class GUI
 			public void actionPerformed(ActionEvent e) 
 			{
 				newGame.player = 2;
-    			System.out.println("Its pressed");
+//    			System.out.println("Its pressed");
 			}
 	    	
 	    });
@@ -222,7 +302,9 @@ public class GUI
 				circleArea.repaint();
 				board.clear();
 				
-				DefaultListModel<String> listModel = new DefaultListModel<>();
+				
+				
+				panel.setLayout(new BorderLayout());
 				
 //	            listModel.addElement("Item 1 kai kati allo gia na tsekaro ti fasi me ton xoro");
 //	            listModel.addElement("Item 2");
@@ -236,6 +318,10 @@ public class GUI
 //	            listModel.addElement("Item 10");
 //	            listModel.addElement("Item 11");
 //	            listModel.addElement("Item 12");
+				
+				listModel.clear();
+				historyList = new JList<>(listModel);
+				scroll = new JScrollPane(historyList);
 	            
 
 				File directory = new File("output");
@@ -260,11 +346,13 @@ public class GUI
 	            	
 	            }
 				
-				JList historyList = new JList<>(listModel);
+//				JList historyList = new JList<>(listModel);
 				
 				panel.remove(circleArea);
 				
-				JScrollPane scroll = new JScrollPane(historyList);
+				frame.setVisible(false);
+				
+//				JScrollPane scroll = new JScrollPane(historyList);
 				
 	            panel.add(scroll, BorderLayout.CENTER);
 
@@ -277,28 +365,7 @@ public class GUI
 	            // Make the frame visible
 	            frame.setVisible(true);
 				
-	            historyList.addListSelectionListener(new ListSelectionListener() 
-	            {
-					
-					@Override
-					public void valueChanged(ListSelectionEvent e) 
-					{
-						// TODO Auto-generated method stub
-	                    if (!e.getValueIsAdjusting()) 
-	                    {
-	                        String selectedValue = historyList.getSelectedValue().toString();
-	                        System.out.println("Selected: " + selectedValue);
-	                        
-	                        panel.remove(scroll);
-	                        panel.add(circleArea);
-	                        frame.add(panel);
-	                        frame.setVisible(true);
-	                        
-	                        readHistory("k a t i .json");
-	                    }
-						
-					}
-				});
+	            historyList.addListSelectionListener(listListener);
 				
 	
 	    		
@@ -345,19 +412,21 @@ public class GUI
 						wining = 0;
 						winConditionHandlePlayer();
 						
-						jsonObject.put("movements", movementsArray);
-						
-						jsonObject.put("Winner ", "AI");
-						
-						// Write JSON to a file
-						String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+//						jsonObject.put("movements", movementsArray);
+//						
+//						jsonObject.put("Winner ", "AI");
+//						
+//						// Write JSON to a file
 //						String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+////						String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+//						
+//						try (FileWriter fileWriter = new FileWriter(JsonName)) {
+//						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+//						} catch (IOException e4) {
+//						    e4.printStackTrace();
+//						}
 						
-						try (FileWriter fileWriter = new FileWriter(JsonName)) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+						newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 						
 						return;
 					}
@@ -367,16 +436,7 @@ public class GUI
 						wining = 0;
 						winConditionHandlePlayer();
 						
-						jsonObject.put("movements", movementsArray);
-						
-						// Write JSON to a file
-						String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
-						
-						try (FileWriter fileWriter = new FileWriter(JsonName)) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+						newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
 						
 						return;
 					}
@@ -393,19 +453,8 @@ public class GUI
 						JOptionPane.showMessageDialog(frame, "Winner: AI!");
 						wining = 0;
 						winConditionHandlePlayer();
-						
-						jsonObject.put("movements", movementsArray);
-						
-						jsonObject.put("Winner ", "AI");
-						
-						// Write JSON to a file
-						String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: AI"+".json";
-						
-						try (FileWriter fileWriter = new FileWriter(JsonName)) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+							
+						newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 						
 						return;
 					}
@@ -415,16 +464,7 @@ public class GUI
 						wining = 0;
 						winConditionHandlePlayer();
 						
-						jsonObject.put("movements", movementsArray);
-						
-						// Write JSON to a file
-						String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
-						
-						try (FileWriter fileWriter = new FileWriter(JsonName)) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+						newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
 						
 						return;
 					}
@@ -485,16 +525,7 @@ public class GUI
 					wining = 0;
 					winConditionHandle();
 					
-					jsonObject.put("movements", movementsArray);
-					
-					// Write JSON to a file
-					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: AI"+".json";
-					
-					try (FileWriter fileWriter = new FileWriter(JsonName)) {
-					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-					} catch (IOException e4) {
-					    e4.printStackTrace();
-					}
+					newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 					
 					return;
 				}
@@ -504,16 +535,7 @@ public class GUI
 					wining = 0;
 					winConditionHandle();
 					
-					jsonObject.put("movements", movementsArray);
-					
-					// Write JSON to a file
-					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
-					
-					try (FileWriter fileWriter = new FileWriter(JsonName)) {
-					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-					} catch (IOException e4) {
-					    e4.printStackTrace();
-					}
+					newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
 					
 					return;
 				}
@@ -530,18 +552,7 @@ public class GUI
 					wining = 0;
 					winConditionHandle();
 					
-					jsonObject.put("movements", movementsArray);
-					
-					jsonObject.put("Winner ", "AI");
-					
-					// Write JSON to a file
-					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: AI"+".json";
-					
-					try (FileWriter fileWriter = new FileWriter(JsonName)) {
-					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-					} catch (IOException e4) {
-					    e4.printStackTrace();
-					}
+					newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 					
 					return;
 				}
@@ -551,16 +562,7 @@ public class GUI
 					wining = 0;
 					winConditionHandle();
 					
-					jsonObject.put("movements", movementsArray);
-					
-					// Write JSON to a file
-					String JsonName = "output/"+" - "+time.toString()+" L: Hard" +"  W: P"+".json";
-					
-					try (FileWriter fileWriter = new FileWriter(JsonName)) {
-					    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-					} catch (IOException e4) {
-					    e4.printStackTrace();
-					}
+					newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
 					
 					return;
 				}
@@ -655,14 +657,7 @@ public class GUI
 		    		  wining = 0;
 		    		  winConditionHandle();
 		    		  
-						jsonObject.put("movements", movementsArray);
-						
-						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+		    		  newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 		    		  
 		    		  return;
 		    	  }
@@ -671,14 +666,8 @@ public class GUI
 		    		  JOptionPane.showMessageDialog(frame, "Winner: Player!");
 		    		  wining = 0;
 		    		  winConditionHandle();
-						jsonObject.put("movements", movementsArray);
-						
-						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+		    		  
+		    		  newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
 		    		  
 		    		  return;
 		    	  }
@@ -696,14 +685,7 @@ public class GUI
 		    		  wining = 0;
 		    		  winConditionHandle();
 		    		  
-						jsonObject.put("movements", movementsArray);
-						
-						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+		    		  newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 		    		  
 		    		  return;
 		    	  }
@@ -713,14 +695,8 @@ public class GUI
 		    		  wining = 0;
 		    		  winConditionHandle();
 		    		  
-						jsonObject.put("movements", movementsArray);
-						
-						// Write JSON to a file
-						try (FileWriter fileWriter = new FileWriter("output/out.json")) {
-						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-						} catch (IOException e4) {
-						    e4.printStackTrace();
-						}
+		    		  newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
+		    		  
 		    		  return;
 		    	  }
 			}
@@ -736,6 +712,7 @@ public class GUI
 		circleArea.addMouseListener(MouseClicked);
 		
 		board.insertAI(3);
+		writeHistory(movementsArray, 2, 3);
 		circleArea.setCircleColor(5, 3, Color.YELLOW);
 		circleArea.repaint();
 	}
@@ -755,6 +732,47 @@ public class GUI
 	}	
 	
 	
+	ActionListener TimerActions = new ActionListener() 
+    {
+    	private int currentIndex = 0; 
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            if (!isReplaying) 
+            {
+                ((Timer) e.getSource()).stop();
+                return;
+            }
+        	
+            if (currentIndex < movementsArray.length()) 
+            {
+                JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
+                int player = jsonMovement.getInt("player");
+                int column = jsonMovement.getInt("column");
+
+                if (player == 1) {
+                    int c = board.insertPlayer(column);
+                    circleArea.setCircleColor(c, column, Color.RED);
+                } else if (player == 2) {
+                    int c = board.insertAI(column);
+                    circleArea.setCircleColor(c, column, Color.YELLOW);
+                }
+
+                circleArea.repaint();
+                panel.repaint();
+                frame.repaint();
+
+                currentIndex++;
+            } 
+            else 
+            {
+                ((Timer) e.getSource()).stop();
+                return;
+            }
+        }
+    };
+	
 	
 	public void readHistory(String filename)		// reads and shows the history from the JSON FILE
 	{
@@ -770,11 +788,19 @@ public class GUI
 
             Timer displayTimer = new Timer(3000, new ActionListener() 
             {
-            	private int currentIndex = movementsArray.length() - 1; 
+            	private int currentIndex = 0; 
 
                 @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (currentIndex >= 0) {
+                public void actionPerformed(ActionEvent e) 
+                {
+                    if (!isReplaying) 
+                    {
+                        ((Timer) e.getSource()).stop();
+                        return;
+                    }
+                	
+                    if (currentIndex < movementsArray.length()) 
+                    {
                         JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
                         int player = jsonMovement.getInt("player");
                         int column = jsonMovement.getInt("column");
@@ -791,24 +817,40 @@ public class GUI
                         panel.repaint();
                         frame.repaint();
 
-                        currentIndex--;
-                    } else {
+                        currentIndex++;
+                    } 
+                    else 
+                    {
                         ((Timer) e.getSource()).stop();
+                        return;
                     }
                 }
             });
             
             displayTimer.setInitialDelay(0); // Start immediately
             displayTimer.start();
-        } catch (IOException e3) {
+            if(!isReplaying)
+            {
+            	displayTimer.stop();
+            	
+            }
+            
+            //displayTimer.removeActionListener(TimerActions);
+        } 
+		catch (IOException e3) 
+		{
             e3.printStackTrace();
         }
 
 	}
 	
+	public void stopReplay() 
+	{
+	    isReplaying = false;
+	}
+	
 	public void writeHistory(JSONArray movementsArray ,int player, int column)
 	{		
-		//JSONArray movementsArray = new JSONArray();
 		movementsArray.put(new JSONObject().put("player", player).put("column", column));
 	}
 }
