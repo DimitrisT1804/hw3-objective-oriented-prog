@@ -23,7 +23,7 @@ public class history
 		//jsonObject.put("Winner ", "AI");
 		
 		// Write JSON to a file
-		String JsonName = "output/"+time.toString()+" L: "+difficulty +" W: "+winner +".json";
+		String JsonName = "connect4/"+time.toString()+" L: "+difficulty +" W: "+winner +".json";
 //		String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
 		
 		try (FileWriter fileWriter = new FileWriter(JsonName)) {

@@ -20,6 +20,8 @@ import java.util.Date;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import java.util.TimerTask;
+
 public class GUI
 {
 
@@ -68,7 +70,7 @@ public class GUI
                 frame.add(panel);
                 frame.setVisible(true);
                 
-                selectedValue = "output/"+selectedValue;
+                selectedValue = "connect4/"+selectedValue;
                 
                 isReplaying = true;
                 
@@ -95,6 +97,16 @@ public class GUI
 	    //frame.setSize(935, 865);	// size of panel
 	    
 	    panel.requestFocusInWindow();
+	    
+	    File newDirectory = new File("connect4");
+	    
+	    if(newDirectory.exists() && newDirectory.isDirectory())
+	    	System.out.println("Directory exists!");
+	    else
+	    {
+	    	if(newDirectory.mkdir())
+	    		System.out.println("Directory created!");
+	    }
 	    
 	    
 	    JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("You");
@@ -141,12 +153,20 @@ public class GUI
 				newGame.difficulty = 1;
 				if(rdbtnNewRadioButton.isSelected())
 				{	
-					frame.removeKeyListener(keyListener);	// to dont call more times when runningAI runs
+					frame.removeKeyListener(keyListener);
+					frame.removeKeyListener(KeyListenerPlayer);
+					circleArea.removeMouseListener(MouseClicked);
+					circleArea.removeMouseMotionListener(Mouseadapter);	// to don't call more times when runningAI runs
+					
 					running_AI();
 				}
 				else if (rdbtnNewRadioButton_1.isSelected())
 				{
+					frame.removeKeyListener(keyListener);
 					frame.removeKeyListener(KeyListenerPlayer);
+					circleArea.removeMouseListener(MouseClicked);
+					circleArea.removeMouseMotionListener(Mouseadapter);
+					
 					runningPlayer();
 				}
 			}
@@ -177,11 +197,19 @@ public class GUI
 				if(rdbtnNewRadioButton.isSelected())
 				{	
 					frame.removeKeyListener(keyListener);
+					frame.removeKeyListener(KeyListenerPlayer);
+					circleArea.removeMouseListener(MouseClicked);
+					circleArea.removeMouseMotionListener(Mouseadapter);
+					
 					running_AI();
 				}
 				else if (rdbtnNewRadioButton_1.isSelected())
 				{
+					frame.removeKeyListener(keyListener);
 					frame.removeKeyListener(KeyListenerPlayer);
+					circleArea.removeMouseListener(MouseClicked);
+					circleArea.removeMouseMotionListener(Mouseadapter);
+					
 					runningPlayer();
 				}
 				
@@ -234,6 +262,7 @@ public class GUI
 					board.clear();
 					//mntmNewMenuItem_1.removeActionListener(mntmNewMenuItem_1.getActionListeners()[0]);
 					frame.removeKeyListener(keyListener);
+					frame.removeKeyListener(KeyListenerPlayer);
 					circleArea.removeMouseListener(MouseClicked);
 					circleArea.removeMouseMotionListener(Mouseadapter);
 					
@@ -244,6 +273,7 @@ public class GUI
 					newGame.clear();
 					board.clear();
 					
+					frame.removeKeyListener(keyListener);
 					frame.removeKeyListener(KeyListenerPlayer);
 					circleArea.removeMouseListener(MouseClicked);
 					circleArea.removeMouseMotionListener(Mouseadapter);
@@ -324,7 +354,7 @@ public class GUI
 				scroll = new JScrollPane(historyList);
 	            
 
-				File directory = new File("output");
+				File directory = new File("connect4");
 
 	            if(directory.isDirectory())
 	            {
@@ -720,12 +750,14 @@ public class GUI
 	public void winConditionHandle()
 	{
 		frame.removeKeyListener(keyListener);
+		frame.removeKeyListener(KeyListenerPlayer);
 		circleArea.removeMouseListener(MouseClicked);
 		circleArea.removeMouseMotionListener(Mouseadapter);
 	}
 	
 	public void winConditionHandlePlayer()
 	{
+		frame.removeKeyListener(keyListener);
 		frame.removeKeyListener(KeyListenerPlayer);
 		circleArea.removeMouseListener(MouseClicked);
 		circleArea.removeMouseMotionListener(Mouseadapter);
@@ -733,6 +765,47 @@ public class GUI
 	
 	
 	ActionListener TimerActions = new ActionListener() 
+    {
+    	private int currentIndex = 0; 
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            if (!isReplaying) 
+            {
+                ((Timer) e.getSource()).stop();
+                return;
+            }
+        	
+            if (currentIndex < movementsArray.length()) 
+            {
+                JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
+                int player = jsonMovement.getInt("player");
+                int column = jsonMovement.getInt("column");
+
+                if (player == 1) {
+                    int c = board.insertPlayer(column);
+                    circleArea.setCircleColor(c, column, Color.RED);
+                } else if (player == 2) {
+                    int c = board.insertAI(column);
+                    circleArea.setCircleColor(c, column, Color.YELLOW);
+                }
+
+                circleArea.repaint();
+                panel.repaint();
+                frame.repaint();
+
+                currentIndex++;
+            } 
+            else 
+            {
+                ((Timer) e.getSource()).stop();
+                return;
+            }
+        }
+    };
+    
+    ActionListener timerActions = new ActionListener() 
     {
     	private int currentIndex = 0; 
 
@@ -831,8 +904,8 @@ public class GUI
             displayTimer.start();
             if(!isReplaying)
             {
-            	displayTimer.stop();
-            	
+            	displayTimer.stop();	
+            	return;
             }
             
             //displayTimer.removeActionListener(TimerActions);
