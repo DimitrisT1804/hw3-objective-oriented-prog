@@ -19,7 +19,7 @@ public class canvas
 	
 	public int insertPlayer(int a)
 	{
-		int pos = -1;
+		int pos = -100;
 		for(int i = 5; i >= 0; i--)
 		{
 			if(array[a][i] != 'X' && array[a][i] != 'O' )
@@ -34,7 +34,7 @@ public class canvas
 	
 	public int insertAI(int a)
 	{
-		int pos = -1;
+		int pos = -100;
 		if(isValid(a))
 		{
 			for(int i = 5; i >= 0; i--)

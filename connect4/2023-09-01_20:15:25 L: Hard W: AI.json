@@ -1,62 +1,6 @@
 {"movements": [
     {
         "column": 3,
-        "player": 1
-    },
-    {
-        "column": 2,
-        "player": 2
-    },
-    {
-        "column": 3,
-        "player": 1
-    },
-    {
-        "column": 3,
-        "player": 2
-    },
-    {
-        "column": 3,
-        "player": 1
-    },
-    {
-        "column": 2,
-        "player": 2
-    },
-    {
-        "column": 3,
-        "player": 2
-    },
-    {
-        "column": 2,
-        "player": 1
-    },
-    {
-        "column": 2,
-        "player": 2
-    },
-    {
-        "column": 2,
-        "player": 1
-    },
-    {
-        "column": 2,
-        "player": 2
-    },
-    {
-        "column": 1,
-        "player": 1
-    },
-    {
-        "column": 3,
-        "player": 2
-    },
-    {
-        "column": 1,
-        "player": 1
-    },
-    {
-        "column": 1,
         "player": 2
     },
     {
@@ -64,11 +8,11 @@
         "player": 1
     },
     {
-        "column": 6,
+        "column": 4,
         "player": 2
     },
     {
-        "column": 0,
+        "column": 1,
         "player": 1
     },
     {
@@ -76,7 +20,19 @@
         "player": 2
     },
     {
-        "column": 4,
+        "column": 1,
+        "player": 1
+    },
+    {
+        "column": 2,
+        "player": 2
+    },
+    {
+        "column": 3,
+        "player": 2
+    },
+    {
+        "column": 1,
         "player": 1
     },
     {
@@ -84,11 +40,63 @@
         "player": 2
     },
     {
-        "column": 4,
+        "column": 1,
         "player": 1
     },
     {
+        "column": 5,
+        "player": 2
+    },
+    {
+        "column": 1,
+        "player": 1
+    },
+    {
+        "column": 1,
+        "player": 2
+    },
+    {
+        "column": 1,
+        "player": 1
+    },
+    {
+        "column": 6,
+        "player": 2
+    },
+    {
         "column": 3,
+        "player": 2
+    },
+    {
+        "column": 1,
+        "player": 1
+    },
+    {
+        "column": 4,
+        "player": 2
+    },
+    {
+        "column": 1,
+        "player": 1
+    },
+    {
+        "column": 5,
+        "player": 2
+    },
+    {
+        "column": 1,
+        "player": 1
+    },
+    {
+        "column": 1,
+        "player": 2
+    },
+    {
+        "column": 6,
+        "player": 1
+    },
+    {
+        "column": 2,
         "player": 2
     }
 ]}

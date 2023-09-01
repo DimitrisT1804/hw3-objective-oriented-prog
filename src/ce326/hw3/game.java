@@ -9,7 +9,7 @@ public class game
 	int player = 0;
 	canvas kati = new canvas();
 	int winCondition = 0;
-	int b = -1, d = -1;
+	int b = -1, d = -2;
 	
 	
 	public game(canvas board)
@@ -269,8 +269,11 @@ public class game
 		b = optPath.get(0);
 		//System.out.println("First move is: "+b+"      ");
 		
-		if(b >= 0 && b <= 6)
-			d = kati.insertAI(b);
+//		while(d != -100)
+//		{
+			if(b >= 0 && b <= 6)
+				d = kati.insertAI(b);			
+		//}
 		
 //		System.out.println("AI");
 //		for (int i = 0; i < 6; i++)

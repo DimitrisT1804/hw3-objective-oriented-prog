@@ -1,0 +1,18 @@
+{"movements": [
+    {
+        "column": 3,
+        "player": 2
+    },
+    {
+        "column": 1,
+        "player": 1
+    },
+    {
+        "column": 4,
+        "player": 2
+    },
+    {
+        "column": 1,
+        "player": 1
+    }
+]}

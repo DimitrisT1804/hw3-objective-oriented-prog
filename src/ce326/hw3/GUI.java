@@ -62,19 +62,23 @@ public class GUI
 			// TODO Auto-generated method stub
             if (!e.getValueIsAdjusting()) 
             {
-                String selectedValue = historyList.getSelectedValue().toString();
-                System.out.println("Selected: " + selectedValue);
-                
-                panel.remove(scroll);
-                panel.add(circleArea);
-                frame.add(panel);
-                frame.setVisible(true);
-                
-                selectedValue = "connect4/"+selectedValue;
-                
-                isReplaying = true;
-                
-                readHistory(selectedValue);
+            	if(historyList.getSelectedValue() != null)
+            	{
+                    String selectedValue = historyList.getSelectedValue().toString();
+                    System.out.println("Selected: " + selectedValue);
+                    
+                    panel.remove(scroll);
+                    panel.add(circleArea);
+                    frame.add(panel);
+                    frame.setVisible(true);
+                    
+                    selectedValue = "connect4/"+selectedValue;
+                    
+                    isReplaying = true;
+                    
+                    readHistory(selectedValue);
+            	}
+
             }
 			
 		}
@@ -148,6 +152,8 @@ public class GUI
                 frame.add(panel);
                 frame.setVisible(true);
                 
+                frame.requestFocus();
+                
                 stopReplay();
 				
 				newGame.difficulty = 1;
@@ -189,6 +195,8 @@ public class GUI
                 panel.add(circleArea);
                 frame.add(panel);
                 frame.setVisible(true);
+                
+                frame.requestFocus();
                 
                 stopReplay();
 				
@@ -242,6 +250,8 @@ public class GUI
                 panel.add(circleArea);
                 frame.add(panel);
                 frame.setVisible(true);
+                
+                frame.requestFocus();
                 
                 stopReplay();
 				
@@ -332,6 +342,11 @@ public class GUI
 				circleArea.repaint();
 				board.clear();
 				
+				frame.removeKeyListener(keyListener);
+				frame.removeKeyListener(KeyListenerPlayer);
+				circleArea.removeMouseListener(MouseClicked);
+				circleArea.removeMouseMotionListener(Mouseadapter);
+				
 				
 				
 				panel.setLayout(new BorderLayout());
@@ -394,6 +409,12 @@ public class GUI
 
 	            // Make the frame visible
 	            frame.setVisible(true);
+	            
+	            frame.removeKeyListener(keyListener);
+				frame.removeKeyListener(KeyListenerPlayer);
+	            
+	            stopReplay();
+	            historyList.removeListSelectionListener(listListener);
 				
 	            historyList.addListSelectionListener(listListener);
 				
@@ -432,74 +453,86 @@ public class GUI
 				else
 				{
 					int c = board.insertPlayer(a);
-					writeHistory(movementsArray , 1, a);
-					wining = board.checkWin();
-					circleArea.setCircleColor(c, a, Color.RED);
-					
-					if(wining == 1)
+					if(c != -100)
 					{
-						JOptionPane.showMessageDialog(frame, "Winner: AI!");
-						wining = 0;
-						winConditionHandlePlayer();
+						writeHistory(movementsArray , 1, a);
+						wining = board.checkWin();
+						circleArea.setCircleColor(c, a, Color.RED);
 						
-//						jsonObject.put("movements", movementsArray);
-//						
-//						jsonObject.put("Winner ", "AI");
-//						
-//						// Write JSON to a file
-//						String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
-////						String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
-//						
-//						try (FileWriter fileWriter = new FileWriter(JsonName)) {
-//						    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
-//						} catch (IOException e4) {
-//						    e4.printStackTrace();
-//						}
-						
-						newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
-						
-						return;
-					}
-					else if (wining == 2)
-					{
-						JOptionPane.showMessageDialog(frame, "Winner: Player!");
-						wining = 0;
-						winConditionHandlePlayer();
-						
-						newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
-						
-						return;
-					}
-					
-					newGame.playAI();
-					writeHistory(movementsArray , 2, newGame.b);
-					
-					circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
-					circleArea.repaint();
-					wining = board.checkWin();
-					
-					if(wining == 1)
-					{
-						JOptionPane.showMessageDialog(frame, "Winner: AI!");
-						wining = 0;
-						winConditionHandlePlayer();
+						if(wining == 1)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: AI!");
+							wining = 0;
+							winConditionHandlePlayer();
 							
-						newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
+//							jsonObject.put("movements", movementsArray);
+//							
+//							jsonObject.put("Winner ", "AI");
+//							
+//							// Write JSON to a file
+//							String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+////							String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+//							
+//							try (FileWriter fileWriter = new FileWriter(JsonName)) {
+//							    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+//							} catch (IOException e4) {
+//							    e4.printStackTrace();
+//							}
+							
+							newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
+							
+							return;
+						}
+						else if (wining == 2)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: Player!");
+							wining = 0;
+							winConditionHandlePlayer();
+							
+							newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
+							
+							return;
+						}
 						
-						return;
+						newGame.playAI();
+						writeHistory(movementsArray , 2, newGame.b);
+						
+						circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
+						circleArea.repaint();
+						wining = board.checkWin();
+						
+						if(wining == 1)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: AI!");
+							wining = 0;
+							winConditionHandlePlayer();
+								
+							newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
+							
+							return;
+						}
+						else if (wining == 2)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: Player!");
+							wining = 0;
+							winConditionHandlePlayer();
+							
+							newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
+							
+							return;
+						}
 					}
-					else if (wining == 2)
+					else
 					{
-						JOptionPane.showMessageDialog(frame, "Winner: Player!");
-						wining = 0;
-						winConditionHandlePlayer();
-						
-						newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
-						
-						return;
+						String message = "<html><body style='width: 200px; text-align: center;'>" +
+				                 "<h1 style='color: #FFA500;'>Invalid Move!</h1>" +
+				                 "<p style='font-size: 16px;'>Try Again!</p>" +
+				                 "</body></html>";
+						JOptionPane.showMessageDialog(frame, message);
 					}
-				}
 
+				}
+					
     	}
 
 		@Override
@@ -544,60 +577,70 @@ public class GUI
 			else
 			{
 				int c = board.insertPlayer(a);
-				circleArea.setCircleColor(c, a, Color.RED);
-				writeHistory(movementsArray , 1, a);
-				board.flag = 0;
-				wining = board.checkWin();
-				
-				if(newGame.winCondition == 1)
+				if(c != -100)
 				{
-					JOptionPane.showMessageDialog(frame, "Winner: AI!");
-					wining = 0;
-					winConditionHandle();
+					circleArea.setCircleColor(c, a, Color.RED);
+					writeHistory(movementsArray , 1, a);
+					board.flag = 0;
+					wining = board.checkWin();
 					
-					newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
+					if(newGame.winCondition == 1)
+					{
+						JOptionPane.showMessageDialog(frame, "Winner: AI!");
+						wining = 0;
+						winConditionHandle();
+						
+						newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
+						
+						return;
+					}
+					else if (newGame.winCondition == 2)
+					{
+						JOptionPane.showMessageDialog(frame, "Winner: Player!");
+						wining = 0;
+						winConditionHandle();
+						
+						newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
+						
+						return;
+					}
+					//circleArea.repaint();
+					newGame.playAI();
+					writeHistory(movementsArray , 2, newGame.b);
+					circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
+					circleArea.repaint();
+					wining = board.checkWin();
 					
-					return;
+					if(newGame.winCondition == 1)
+					{
+						JOptionPane.showMessageDialog(frame, "Winner: AI!");
+						wining = 0;
+						winConditionHandle();
+						
+						newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
+						
+						return;
+					}
+					else if (newGame.winCondition == 2)
+					{
+						JOptionPane.showMessageDialog(frame, "Winner: Player!");
+						wining = 0;
+						winConditionHandle();
+						
+						newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
+						
+						return;
+					}
 				}
-				else if (newGame.winCondition == 2)
+				else
 				{
-					JOptionPane.showMessageDialog(frame, "Winner: Player!");
-					wining = 0;
-					winConditionHandle();
-					
-					newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
-					
-					return;
-				}
-				//circleArea.repaint();
-				newGame.playAI();
-				writeHistory(movementsArray , 2, newGame.b);
-				circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
-				circleArea.repaint();
-				wining = board.checkWin();
-				
-				if(newGame.winCondition == 1)
-				{
-					JOptionPane.showMessageDialog(frame, "Winner: AI!");
-					wining = 0;
-					winConditionHandle();
-					
-					newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
-					
-					return;
-				}
-				else if (newGame.winCondition == 2)
-				{
-					JOptionPane.showMessageDialog(frame, "Winner: Player!");
-					wining = 0;
-					winConditionHandle();
-					
-					newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
-					
-					return;
+					String message = "<html><body style='width: 200px; text-align: center;'>" +
+			                 "<h1 style='color: #FFA500;'>Invalid Move!</h1>" +
+			                 "<p style='font-size: 16px;'>Try Again!</p>" +
+			                 "</body></html>";
+					JOptionPane.showMessageDialog(frame, message);
 				}
 			}
-			
 		}
 		
 		@Override
@@ -805,46 +848,46 @@ public class GUI
         }
     };
     
-    ActionListener timerActions = new ActionListener() 
-    {
-    	private int currentIndex = 0; 
-
-        @Override
-        public void actionPerformed(ActionEvent e) 
-        {
-            if (!isReplaying) 
-            {
-                ((Timer) e.getSource()).stop();
-                return;
-            }
-        	
-            if (currentIndex < movementsArray.length()) 
-            {
-                JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
-                int player = jsonMovement.getInt("player");
-                int column = jsonMovement.getInt("column");
-
-                if (player == 1) {
-                    int c = board.insertPlayer(column);
-                    circleArea.setCircleColor(c, column, Color.RED);
-                } else if (player == 2) {
-                    int c = board.insertAI(column);
-                    circleArea.setCircleColor(c, column, Color.YELLOW);
-                }
-
-                circleArea.repaint();
-                panel.repaint();
-                frame.repaint();
-
-                currentIndex++;
-            } 
-            else 
-            {
-                ((Timer) e.getSource()).stop();
-                return;
-            }
-        }
-    };
+//    ActionListener timerActions = new ActionListener() 
+//    {
+//    	private int currentIndex = 0; 
+//
+//        @Override
+//        public void actionPerformed(ActionEvent e) 
+//        {
+//            if (!isReplaying) 
+//            {
+//                ((Timer) e.getSource()).stop();
+//                return;
+//            }
+//        	
+//            if (currentIndex < movementsArray.length()) 
+//            {
+//                JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
+//                int player = jsonMovement.getInt("player");
+//                int column = jsonMovement.getInt("column");
+//
+//                if (player == 1) {
+//                    int c = board.insertPlayer(column);
+//                    circleArea.setCircleColor(c, column, Color.RED);
+//                } else if (player == 2) {
+//                    int c = board.insertAI(column);
+//                    circleArea.setCircleColor(c, column, Color.YELLOW);
+//                }
+//
+//                circleArea.repaint();
+//                panel.repaint();
+//                frame.repaint();
+//
+//                currentIndex++;
+//            } 
+//            else 
+//            {
+//                ((Timer) e.getSource()).stop();
+//                return;
+//            }
+//        }
+//    };
 	
 	
 	public void readHistory(String filename)		// reads and shows the history from the JSON FILE
@@ -919,6 +962,7 @@ public class GUI
 	
 	public void stopReplay() 
 	{
+		historyList.removeListSelectionListener(listListener);
 	    isReplaying = false;
 	}
 	
