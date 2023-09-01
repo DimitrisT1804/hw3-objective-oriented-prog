@@ -232,13 +232,7 @@ public class GUI
 			
 			@Override
 			public void actionPerformed(ActionEvent e) 
-			{
-//				newGame.clear();
-//				circleArea.clear();
-//				circleArea.repaint();
-//				board.clear();
-//				newGame.difficulty = 5;
-				
+			{	
 				historyList.removeListSelectionListener(listListener);;
 				
 				board = new canvas();
@@ -257,14 +251,6 @@ public class GUI
 				
 				
 				newGame.difficulty = 5;
-				
-				/*new implement */
-				
-				
-//				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//				String time = dateFormat.format(new Date());
-				
-				//jsonObject.put("start time ", time);
 				
 				if(rdbtnNewRadioButton.isSelected())
 				{		
@@ -337,6 +323,9 @@ public class GUI
 	    	{
 	    		System.out.println("History menu clicked!");
 	    		
+	    		historyList.removeListSelectionListener(listListener);
+	    		stopReplay();
+	    		
 				newGame.clear();
 				circleArea.clear();
 				circleArea.repaint();
@@ -351,23 +340,13 @@ public class GUI
 				
 				panel.setLayout(new BorderLayout());
 				
-//	            listModel.addElement("Item 1 kai kati allo gia na tsekaro ti fasi me ton xoro");
-//	            listModel.addElement("Item 2");
-//	            listModel.addElement("Item 3");
-//	            listModel.addElement("Item 4");
-//	            listModel.addElement("Item 5");
-//	            listModel.addElement("Item 6");
-//	            listModel.addElement("Item 7");
-//	            listModel.addElement("Item 8");
-//	            listModel.addElement("Item 9");
-//	            listModel.addElement("Item 10");
-//	            listModel.addElement("Item 11");
-//	            listModel.addElement("Item 12");
-				
 				listModel.clear();
+
+
+	            
 				historyList = new JList<>(listModel);
 				scroll = new JScrollPane(historyList);
-	            
+				
 
 				File directory = new File("connect4");
 
@@ -389,6 +368,18 @@ public class GUI
 	            	}
 	            	
 	            	
+	            }
+	            
+	            ArrayList<String> sortedData = new ArrayList<>();
+	            for (int i = 0; i < listModel.getSize(); i++) {
+	                sortedData.add(listModel.getElementAt(i));
+	            }
+
+	            Collections.sort(sortedData, Collections.reverseOrder());
+	            listModel.clear();
+
+	            for (String item : sortedData) {
+	                listModel.addElement(item);
 	            }
 				
 //				JList historyList = new JList<>(listModel);
@@ -413,10 +404,11 @@ public class GUI
 	            frame.removeKeyListener(keyListener);
 				frame.removeKeyListener(KeyListenerPlayer);
 	            
-	            stopReplay();
-	            historyList.removeListSelectionListener(listListener);
+//	            historyList.removeListSelectionListener(listListener);
+	            
 				
 	            historyList.addListSelectionListener(listListener);
+	            //stopReplay();
 				
 	
 	    		
@@ -607,6 +599,8 @@ public class GUI
 					//circleArea.repaint();
 					newGame.playAI();
 					writeHistory(movementsArray , 2, newGame.b);
+					if(newGame.d == -100)
+						newGame.b++;
 					circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
 					circleArea.repaint();
 					wining = board.checkWin();
@@ -938,6 +932,25 @@ public class GUI
                     else 
                     {
                         ((Timer) e.getSource()).stop();
+						wining = board.checkWin();
+						
+						if(wining == 1)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: AI!");
+							wining = 0;
+							winConditionHandlePlayer();
+							
+							return;
+						}
+						else if (wining == 2)
+						{
+							JOptionPane.showMessageDialog(frame, "Winner: Player!");
+							wining = 0;
+							winConditionHandlePlayer();
+							
+							return;
+						}
+                        
                         return;
                     }
                 }

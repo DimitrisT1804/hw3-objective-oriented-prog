@@ -269,11 +269,19 @@ public class game
 		b = optPath.get(0);
 		//System.out.println("First move is: "+b+"      ");
 		
-//		while(d != -100)
-//		{
-			if(b >= 0 && b <= 6)
-				d = kati.insertAI(b);			
-		//}
+		if(b >= 0 && b <= 6)
+		{
+			d = kati.insertAI(b);			
+		}
+		if(d == -100)
+		{
+			while(d == -100)
+			{				
+				b++;
+				d = kati.insertAI(b);
+			}
+		}
+		
 		
 //		System.out.println("AI");
 //		for (int i = 0; i < 6; i++)
