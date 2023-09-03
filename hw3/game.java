@@ -3,25 +3,23 @@ package ce326.hw3;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// class that make all the settings for the game
 public class game
 {
 	int difficulty = 5;
 	int player = 0;
-	canvas currentBoard = new canvas();
-	int winCondition = 0;	// check who is the winner
-	int b = -1, d = -2;		// variables that represent the rows and columns
+	canvas kati = new canvas();
+	int winCondition = 0;
+	int b = -1, d = -2;
 	
-	// Constructor
+	
 	public game(canvas board)
 	{
-		currentBoard = board;
+		kati = board;
 	}
 	
-	// re-initialize all the values
 	public void clear()
 	{
-		currentBoard.clear();
+		kati.clear();
 		b = -1; 
 		d = -1;
 		winCondition = 0;
@@ -32,28 +30,35 @@ public class game
 		this.difficulty = difficulty;
 	}
 	
-	// set who is the player
 	public void setPlayer(int player)
 	{
 		this.player = player;
 	}
 	
-	// return the current canvas
 	public canvas getCanvas()
 	{
-		return currentBoard;
+		return kati;
 	}
 	
-	// insert for player
 	public void insertPlayer(int a)
 	{
 		if(a > 6)
 			System.out.println("ERROR");
 		
-		currentBoard.insertPlayer(a);
+		kati.insertPlayer(a);
 		
-		winCondition = currentBoard.checkWin();
-		// check if there is a winner after each move
+//		System.out.println("Player");
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + kati.array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
+		
+		winCondition = kati.checkWin();
 		if(winCondition == 1)
 		{
 			System.out.println("Winner: AI");
@@ -66,28 +71,28 @@ public class game
 		}
 	}
 	
-	//insert for AI using the method from the board
 	public void instertAI(int a)
 	{
 		if(a > 6)
 			System.out.println("ERROR");
 		
-		currentBoard.insertAI(a);
+		kati.insertAI(a);
 	}
 	
-	// start the game on terminal and just represent the canvas with scheme
+	
 	public void start()
 	{
 		int a = 0, b = 0;
 		
 		canvas newCanvas = new canvas();
 		TreeAdvanced newTree;
+
 		
 		int winCondition;
 		
 		switch(player)
 		{
-			case (1):	// choose the first player
+			case (1):
 			{
 				while(true)
 				{
@@ -96,9 +101,20 @@ public class game
 					if(a > 6)
 						break;
 					
-					currentBoard.insertPlayer(a);
+					kati.insertPlayer(a);
 					
-					winCondition = currentBoard.checkWin();
+//					System.out.println("Player");
+//					for (int i = 0; i < 6; i++)
+//					{
+//						for (int j = 0; j < 7; j++)
+//						{
+//							System.out.print("| " + kati.array[j][i] + " ");
+//						}
+//						System.out.println("|");
+//						System.out.println("-----------------------------");
+//					}
+					
+					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
 						//System.out.println("Winner: AI");
@@ -110,10 +126,11 @@ public class game
 					
 					
 					
-					newTree = new TreeAdvanced(difficulty, currentBoard);	// create the tree for the AI move
-					newCanvas = currentBoard;
+					newTree = new TreeAdvanced(difficulty, kati);
+					System.out.println("The size of tree is: " + newTree.size());
+					newCanvas = kati;
 					int pos = -1;
-					newTree.addEvaluation(newTree.root, newCanvas, currentBoard, pos);
+					newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
 					
 
 					newTree.minMax();
@@ -121,15 +138,24 @@ public class game
 					ArrayList<Integer> optPath = new ArrayList<Integer>(0);
 					optPath = newTree.optimalPath();
 					
-					b = optPath.get(0); // get the best move fo the AI after solving MIN-MAX with pruning
-					//System.out.println("First move is: "+b+"      ");
+					b = optPath.get(0);
+					System.out.println("First move is: "+b+"      ");
 					
 					if(b >= 0 && b <= 6)
-						currentBoard.insertAI(b);
+						kati.insertAI(b);
 					
 					System.out.println("AI");
+//					for (int i = 0; i < 6; i++)
+//					{
+//						for (int j = 0; j < 7; j++)
+//						{
+//							System.out.print("| " + kati.array[j][i] + " ");
+//						}
+//						System.out.println("|");
+//						System.out.println("-----------------------------");
+//					}
 	
-					winCondition = currentBoard.checkWin();
+					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
 						//System.out.println("Winner: AI");
@@ -146,11 +172,11 @@ public class game
 			{
 				while (true)
 				{			
-					newTree = new TreeAdvanced(difficulty, currentBoard);
+					newTree = new TreeAdvanced(difficulty, kati);
 					System.out.println("The size of tree is: " + newTree.size());
-					newCanvas = currentBoard;
+					newCanvas = kati;
 					int pos = -1;
-					newTree.addEvaluation(newTree.root, newCanvas, currentBoard, pos);
+					newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
 					
 					
 					newTree.minMax();
@@ -162,20 +188,20 @@ public class game
 					System.out.println("First move is: "+b+"      ");
 					
 					if(b >= 0 && b <= 6)
-						currentBoard.insertAI(b);
+						kati.insertAI(b);
 					
 					System.out.println("AI");
 					for (int i = 0; i < 6; i++)
 					{
 						for (int j = 0; j < 7; j++)
 						{
-							System.out.print("| " + currentBoard.array[j][i] + " ");
+							System.out.print("| " + kati.array[j][i] + " ");
 						}
 						System.out.println("|");
 						System.out.println("-----------------------------");
 					}
 					
-					winCondition = currentBoard.checkWin();
+					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
 						System.out.println("Winner: AI");
@@ -192,20 +218,20 @@ public class game
 					if(a > 6)
 						break;
 					
-					currentBoard.insertPlayer(a);
+					kati.insertPlayer(a);
 					
 					System.out.println("Player");
 					for (int i = 0; i < 6; i++)
 					{
 						for (int j = 0; j < 7; j++)
 						{
-							System.out.print("| " + currentBoard.array[j][i] + " ");
+							System.out.print("| " + kati.array[j][i] + " ");
 						}
 						System.out.println("|");
 						System.out.println("-----------------------------");
 					}
 					
-					winCondition = currentBoard.checkWin();
+					winCondition = kati.checkWin();
 					if(winCondition == 1)
 					{
 						System.out.println("Winner: AI");
@@ -223,38 +249,52 @@ public class game
 
 	}
 	
-	// make all the evaluation for the AI and choose the best move
+	
 	public void playAI()
 	{
 		TreeAdvanced newTree;
 		canvas newCanvas;
-		newTree = new TreeAdvanced(difficulty, currentBoard);	// create the tree
-		newCanvas = currentBoard;
+		newTree = new TreeAdvanced(difficulty, kati);
+		//System.out.println("The size of tree is: " + newTree.size());
+		newCanvas = kati;
 		int pos = -1;
-		newTree.addEvaluation(newTree.root, newCanvas, currentBoard, pos);
+		newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
 		
 		
 		newTree.minMax();
-		newTree.isMinMax = true;	
+		newTree.isMinMax = true;
 		ArrayList<Integer> optPath = new ArrayList<Integer>(0);
-		optPath = newTree.optimalPath();	// solve for MIN MAX with pruning
+		optPath = newTree.optimalPath();
 		
-		b = optPath.get(0);	// choose the best move and add it to b
+		b = optPath.get(0);
+		//System.out.println("First move is: "+b+"      ");
 		
-		if(b >= 0 && b <= 6)	// if it is in the limits
+		if(b >= 0 && b <= 6)
 		{
-			d = currentBoard.insertAI(b);	// play the move
+			d = kati.insertAI(b);			
 		}
 		if(d == -100)
 		{
 			while(d == -100)
 			{				
 				b++;
-				d = currentBoard.insertAI(b);
+				d = kati.insertAI(b);
 			}
 		}
 		
-		winCondition = currentBoard.checkWin();		// check for winner
+		
+//		System.out.println("AI");
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + kati.array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
+		
+		winCondition = kati.checkWin();
 		if(winCondition == 1)
 		{
 			//System.out.println("Winner: AI");
@@ -269,15 +309,15 @@ public class game
 	}
 	
 	
-	// player plays first
 	public void playPlayer()
 	{
 		TreeAdvanced newTree;
 		canvas newCanvas;
-		newTree = new TreeAdvanced(difficulty, currentBoard);
-		newCanvas = currentBoard;
+		newTree = new TreeAdvanced(difficulty, kati);
+		//System.out.println("The size of tree is: " + newTree.size());
+		newCanvas = kati;
 		int pos = -1;
-		newTree.addEvaluation(newTree.root, newCanvas, currentBoard, pos);
+		newTree.addEvaluation(newTree.root, newCanvas, kati, pos);
 		
 		
 		newTree.minMax();
@@ -286,12 +326,23 @@ public class game
 		optPath = newTree.optimalPath();
 		
 		b = optPath.get(0);
+		//System.out.println("First move is: "+b+"      ");
 		
 		if(b >= 0 && b <= 6)
-			d = currentBoard.insertAI(b);
+			d = kati.insertAI(b);
 		
+//		System.out.println("AI");
+//		for (int i = 0; i < 6; i++)
+//		{
+//			for (int j = 0; j < 7; j++)
+//			{
+//				System.out.print("| " + kati.array[j][i] + " ");
+//			}
+//			System.out.println("|");
+//			System.out.println("-----------------------------");
+//		}
 		
-		winCondition = currentBoard.checkWin();
+		winCondition = kati.checkWin();
 		if(winCondition == 1)
 		{
 			//System.out.println("Winner: AI");

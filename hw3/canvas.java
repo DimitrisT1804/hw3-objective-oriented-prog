@@ -1,13 +1,11 @@
 package ce326.hw3;
 
-/* A class that represents the board of the game with 7x6 dimensions */
 public class canvas 
 {
-	// for the game create a 2d array char to represent the canvas, X is the player and O the AI
 	char[][] array = new char[7][6];
 	int flag = 0;
 	
-	// Constructor with default ' ' in each pos
+	
 	public canvas()
 	{
 		for(int i = 0; i < 7; i++)
@@ -19,7 +17,6 @@ public class canvas
 		}
 	}
 	
-	// find the row that should add for specific column
 	public int insertPlayer(int a)
 	{
 		int pos = -100;
@@ -35,7 +32,6 @@ public class canvas
 		return pos;
 	}
 	
-	// find the row that should add for specific column
 	public int insertAI(int a)
 	{
 		int pos = -100;
@@ -55,7 +51,6 @@ public class canvas
 		return pos;
 	}
 	
-	// remove the move for specific column
 	public void removeMove(int a)
 	{
 		int pos = 0, i;
@@ -74,7 +69,6 @@ public class canvas
 			array[a][pos+1] = ' ';
 	}
 	
-	// checks if a move is valid, or if the column is full
 	public boolean isValid(int a)
 	{
 		int i;
@@ -97,7 +91,7 @@ public class canvas
 			
 	}
 	
-	// check if there is any winner which means there is 4 in a row or vertical or diagonal
+	
 	public int checkWin() 
 	{
 	    int yellows = 0, reds = 0;
@@ -185,7 +179,7 @@ public class canvas
 	    return 0;
 	}
 	
-	// check if there is any winner which means there is 4 in a row or vertical or diagonal: second method
+	
 	public int evaluateTwo() 
 	{
 	    int score = 0;
@@ -325,7 +319,6 @@ public class canvas
 	    return score;
 	}
 	
-	// get the amount of the available cells for specific column
 	public int getAvailableCells(int a)
 	{
 		int count = 0;
@@ -340,7 +333,6 @@ public class canvas
 		return count;
 	}
 	
-	// clear the board to reset
 	public void clear()
 	{
 		for(int i = 0; i < 7; i++)

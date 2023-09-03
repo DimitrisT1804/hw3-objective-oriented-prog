@@ -21,13 +21,14 @@ public class history
 			difficulty = "Hard";
 		else
 			difficulty = "Unknown";
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss");
-		time = dateFormat.format(new Date());	// get the time each time
 		
-		// Write JSON to a file, keep the name in a string
-		// dont need to keep these informations in the json just add date time level and winner in the title of the file json
+		//jsonObject.put("Winner ", "AI");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss");
+		time = dateFormat.format(new Date());
+		
+		// Write JSON to a file
 		String JsonName = "connect4/"+time.toString()+" L: "+difficulty +" W: "+winner +".json";
+//		String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
 		
 		try (FileWriter fileWriter = new FileWriter(JsonName)) 
 		{

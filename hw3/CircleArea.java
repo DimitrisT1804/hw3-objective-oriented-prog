@@ -6,7 +6,6 @@ import java.awt.*;
 public class CircleArea extends JComponent 
 {
 
-	/* Parameters for the circles of the panel */
 	public static final long serialVersionUID = 1L;		// it creates this
 	final static int ROWS = 6;
     final static int COLUMNS = 7;
@@ -22,17 +21,30 @@ public class CircleArea extends JComponent
     public CircleArea() 
     {
         circleColors = new Color[ROWS][COLUMNS];
+        // Initialize all circles to white
         for (int row = 0; row < ROWS; row++) 
         {
             for (int column = 0; column < COLUMNS; column++) 
             {
-                circleColors[row][column] = Color.WHITE;	// initialize the circle with white color
+                circleColors[row][column] = Color.WHITE;
             }
             
         }
+//        addMouseListener(new MouseAdapter() 
+//        {
+//            @Override
+//            public void mouseClicked(MouseEvent e) 
+//            {
+//                int row = e.getY() / CELL_SIZE;
+//                int col = e.getX() / CELL_SIZE;
+//                if (row >= 0 && row < ROWS && col >= 0 && col < COLUMNS) 
+//                {
+//                    setCircleColor(row, col, Color.RED); // Change the color of the clicked circle to red
+//                }
+//            }
+//        });
     }
     
-    // Set color of the specific circle
     public void setCircleColor(int row, int column, Color color) 
     {
     	if(column != -1 && row != -1)
@@ -59,10 +71,9 @@ public class CircleArea extends JComponent
         g.fillRect(0, 0, getWidth(), getHeight());
 
         // Draw the circles
-        for (int row = 0; row < ROWS; row++) 
-        {
-            for (int column = 0; column < COLUMNS; column++) 
-            {
+        //g.setColor(Color.WHITE);
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
                 int x = BORDER_SIZE + column * (CIRCLE_DIAMETER + CIRCLE_GAP);
                 int y = BORDER_SIZE + row * (CIRCLE_DIAMETER + CIRCLE_GAP);
                 g.setColor(circleColors[row][column]);
@@ -71,7 +82,6 @@ public class CircleArea extends JComponent
         }
     }
     
-    // Clear all circles on reset
     public void clear()
     {
         for (int row = 0; row < ROWS; row++) 

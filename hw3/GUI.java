@@ -22,29 +22,29 @@ import javax.swing.event.ListSelectionListener;
 
 import java.util.TimerTask;
 
-// class that has all the methods for the GUI of the game and starts the game
 public class GUI
 {
-	public JFrame frame;		// the frame 
-	private CircleArea circleArea = new CircleArea();	// create the circles
+
+	public JFrame frame;
+	private CircleArea circleArea = new CircleArea();
 	JPanel panel = new JPanel();
-	canvas board = new canvas();		// create the canvas
-	game newGame = new game(board);		// create the game
+	canvas board = new canvas();
+	game newGame = new game(board);
 	
-	JSONObject jsonObject = new JSONObject();	// json Object to read the history
+	JSONObject jsonObject = new JSONObject();
 	
 	JSONArray movementsArray = new JSONArray();
 	
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss");
-	String time = dateFormat.format(new Date());	// get the date
+	String time = dateFormat.format(new Date());
 	
-	history newHistory = new history();	// create new History
+	history newHistory = new history();
 	
 	DefaultListModel<String> listModel = new DefaultListModel<>();
 	
-	JList historyList = new JList<>(listModel);		// history list to make a list with the old games
+	JList historyList = new JList<>(listModel);
 	
-	JScrollPane scroll = new JScrollPane(historyList);	// make scrollable
+	JScrollPane scroll = new JScrollPane(historyList);
 	
 	private boolean isReplaying = false;
 	
@@ -53,9 +53,9 @@ public class GUI
 	int mouseClicked = 0;
 	int MousePos = -1;
 	
-	// actionListener for the list
 	ListSelectionListener listListener = new ListSelectionListener() 
     {
+		
 		@Override
 		public void valueChanged(ListSelectionEvent e) 
 		{
@@ -65,6 +65,7 @@ public class GUI
             	if(historyList.getSelectedValue() != null)
             	{
                     String selectedValue = historyList.getSelectedValue().toString();
+                    System.out.println("Selected: " + selectedValue);
                     
                     panel.remove(scroll);
                     panel.add(circleArea);
@@ -77,11 +78,12 @@ public class GUI
                     
                     readHistory(selectedValue);
             	}
-            }	
+
+            }
+			
 		}
     };
 
-    // constructor
 	public GUI() 
 	{
 		initialize();
@@ -96,12 +98,13 @@ public class GUI
 	    
 	    frame.getContentPane().add(panel, BorderLayout.CENTER);
 	    panel.add(circleArea);
+	    //frame.setSize(935, 865);	// size of panel
 	    
 	    panel.requestFocusInWindow();
 	    
 	    File newDirectory = new File("connect4");
 	    
-	    if(newDirectory.exists() && newDirectory.isDirectory())		// create folder connect4 if it does not exists
+	    if(newDirectory.exists() && newDirectory.isDirectory())
 	    	System.out.println("Directory exists!");
 	    else
 	    {
@@ -133,7 +136,6 @@ public class GUI
 	    JMenuItem mntmTrivia = new JMenuItem("Trivia");
 	    mnNewMenu.add(mntmTrivia);
 	    
-	    // action Listener for button Trivia
 	    mntmTrivia.addActionListener(new ActionListener() 
 	    {
 			
@@ -157,7 +159,6 @@ public class GUI
 				newGame.difficulty = 1;
 				if(rdbtnNewRadioButton.isSelected())
 				{	
-					// removes all listeners before start again
 					frame.removeKeyListener(keyListener);
 					frame.removeKeyListener(KeyListenerPlayer);
 					circleArea.removeMouseListener(MouseClicked);
@@ -180,7 +181,6 @@ public class GUI
 	    JMenuItem mntmNewMenuItem = new JMenuItem("Medium");
 	    mnNewMenu.add(mntmNewMenuItem);
 	    
-	 // action Listener for button Medium level
 	    mntmNewMenuItem.addActionListener(new ActionListener() {
 			
 			@Override
@@ -227,7 +227,6 @@ public class GUI
 	    JMenuItem mntmNewMenuItem_1 = new JMenuItem("Hard");
 	    mnNewMenu.add(mntmNewMenuItem_1);
 	    
-	 // action Listener for button Hard level
 	    mntmNewMenuItem_1.addActionListener(new ActionListener() 
 	    {
 			
@@ -255,16 +254,15 @@ public class GUI
 				
 				if(rdbtnNewRadioButton.isSelected())
 				{		
-					// re-initialize all before start again
 					newGame.clear();
 					board.clear();
-
+					//mntmNewMenuItem_1.removeActionListener(mntmNewMenuItem_1.getActionListeners()[0]);
 					frame.removeKeyListener(keyListener);
 					frame.removeKeyListener(KeyListenerPlayer);
 					circleArea.removeMouseListener(MouseClicked);
 					circleArea.removeMouseMotionListener(Mouseadapter);
 					
-					running_AI();	// call running-AI to play first
+					running_AI();
 				}
 				else if (rdbtnNewRadioButton_1.isSelected())
 				{
@@ -276,7 +274,7 @@ public class GUI
 					circleArea.removeMouseListener(MouseClicked);
 					circleArea.removeMouseMotionListener(Mouseadapter);
 					
-					runningPlayer();	// call player to play first
+					runningPlayer();
 				}
 				
 			}
@@ -294,6 +292,7 @@ public class GUI
 			public void actionPerformed(ActionEvent e) 
 			{
 				newGame.player = 2;
+//    			System.out.println("Its pressed");
 			}
 	    	
 	    });
@@ -317,14 +316,15 @@ public class GUI
 	    JMenuItem HistoryButton = new JMenuItem("Show History");
 	    mnNewMenu_2.add(HistoryButton);
 	    
-	    // Listener for the button "Show History"
 	    HistoryButton.addActionListener(new ActionListener()
 	    {
 	    	@Override
 	    	public void actionPerformed(ActionEvent e)
 	    	{
+	    		System.out.println("History menu clicked!");
+	    		
 	    		historyList.removeListSelectionListener(listListener);
-	    		stopReplay();	// stop replaying previous game 
+	    		stopReplay();
 	    		
 				newGame.clear();
 				circleArea.clear();
@@ -341,8 +341,10 @@ public class GUI
 				panel.setLayout(new BorderLayout());
 				
 				listModel.clear();
+
+
 	            
-				historyList = new JList<>(listModel);	// create new List
+				historyList = new JList<>(listModel);
 				scroll = new JScrollPane(historyList);
 				
 
@@ -358,8 +360,9 @@ public class GUI
 	            		{
 	            			if(file.isFile())
 	            			{
-	            				if(file.getName().contains(".json"))	// conclude only files that are json
+	            				if(file.getName().contains(".json"))
 	            					listModel.addElement(file.getName());
+	            				
 	            			}
 	            		}
 	            	}
@@ -367,7 +370,6 @@ public class GUI
 	            	
 	            }
 	            
-	            // sort the list
 	            ArrayList<String> sortedData = new ArrayList<>();
 	            for (int i = 0; i < listModel.getSize(); i++) {
 	                sortedData.add(listModel.getElementAt(i));
@@ -379,22 +381,38 @@ public class GUI
 	            for (String item : sortedData) {
 	                listModel.addElement(item);
 	            }
-	            
-	            // remove circles and panel and replace it with history list
+				
+//				JList historyList = new JList<>(listModel);
+				
 				panel.remove(circleArea);
 				
 				frame.setVisible(false);
 				
+//				JScrollPane scroll = new JScrollPane(historyList);
+				
 	            panel.add(scroll, BorderLayout.CENTER);
 
+	            // Add your panel to the frame
 	            frame.add(panel);
 
+	            // Set the size of the frame
+	            //frame.setSize(600, 600);
+
+	            // Make the frame visible
 	            frame.setVisible(true);
 	            
 	            frame.removeKeyListener(keyListener);
-				frame.removeKeyListener(KeyListenerPlayer);	            
+				frame.removeKeyListener(KeyListenerPlayer);
+	            
+//	            historyList.removeListSelectionListener(listListener);
+	            
 				
 	            historyList.addListSelectionListener(listListener);
+	            //stopReplay();
+				
+	
+	    		
+	    		//readHistory(selected);
 	    	}
 	    });
 	    
@@ -410,19 +428,17 @@ public class GUI
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				// just show a message guide for game
 				JOptionPane.showMessageDialog(frame, "Press 0-6 to add a piece in the board, \nOR double click in a column!");
 			}
 		});
 	}
 	
-	// Keylistener if the player plays first
 	KeyListener KeyListenerPlayer = new KeyListener()
 	{
     	public void keyTyped(KeyEvent e)
     	{
 				int a = Character.getNumericValue(e.getKeyChar());
-				if(a < 0 || a > 6)	// check the move
+				if(a < 0 || a > 6)
 				{
 					JOptionPane.showMessageDialog(frame, "Invalid Move!");
 				}
@@ -441,6 +457,20 @@ public class GUI
 							wining = 0;
 							winConditionHandlePlayer();
 							
+//							jsonObject.put("movements", movementsArray);
+//							
+//							jsonObject.put("Winner ", "AI");
+//							
+//							// Write JSON to a file
+//							String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+////							String JsonName = "output/"+time.toString()+"_L:Hard" +"_W:AI"+".json";
+//							
+//							try (FileWriter fileWriter = new FileWriter(JsonName)) {
+//							    fileWriter.write(jsonObject.toString(4)); // Indentation of 4 spaces
+//							} catch (IOException e4) {
+//							    e4.printStackTrace();
+//							}
+							
 							newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 							
 							return;
@@ -451,17 +481,16 @@ public class GUI
 							wining = 0;
 							winConditionHandlePlayer();
 							
-							// write move in history
 							newHistory.writeHistory(jsonObject, movementsArray, "P", time, newGame.difficulty);
 							
 							return;
 						}
 						
-						newGame.playAI();	// call the AI to play
-						writeHistory(movementsArray , 2, newGame.b);	// write the move in history
+						newGame.playAI();
+						writeHistory(movementsArray , 2, newGame.b);
 						
 						circleArea.setCircleColor(newGame.d, newGame.b, Color.YELLOW);
-						circleArea.repaint();	 // reload the color on circles
+						circleArea.repaint();
 						wining = board.checkWin();
 						
 						if(wining == 1)
@@ -487,14 +516,15 @@ public class GUI
 					}
 					else
 					{
-						// show a more complex message
 						String message = "<html><body style='width: 200px; text-align: center;'>" +
 				                 "<h1 style='color: #FFA500;'>Invalid Move!</h1>" +
 				                 "<p style='font-size: 16px;'>Try Again!</p>" +
 				                 "</body></html>";
 						JOptionPane.showMessageDialog(frame, message);
 					}
+
 				}
+					
     	}
 
 		@Override
@@ -513,7 +543,7 @@ public class GUI
     };
 
 	
-	// if player plays first add listeners for keyboard and for mouse
+	
 	public void runningPlayer()
 	{
 		frame.addKeyListener(KeyListenerPlayer);
@@ -522,7 +552,6 @@ public class GUI
 
 	}
 	
-	// Key listener for AI plays first
 	KeyListener keyListener = new KeyListener()
 	{
 		@Override
@@ -567,6 +596,7 @@ public class GUI
 						
 						return;
 					}
+					//circleArea.repaint();
 					newGame.playAI();
 					writeHistory(movementsArray , 2, newGame.b);
 					if(newGame.d == -100)
@@ -583,7 +613,7 @@ public class GUI
 						
 						newHistory.writeHistory(jsonObject, movementsArray, "AI", time, newGame.difficulty);
 						
-						return;	// finish only when there is a winner
+						return;
 					}
 					else if (newGame.winCondition == 2)
 					{
@@ -639,10 +669,11 @@ public class GUI
 		@Override
 		public void mouseMoved(MouseEvent e)
 		{
-			// calculate the pos of mouse for each collumn
+			//System.out.println("X is: " + e.getX());
 			if(e.getX() > 55 && e.getX() < 150)
 			{
 				MousePos = 0;
+			//circleArea.addMouseMotionListener();
 			}
 			else if(e.getX() > 170 && e.getX() < 270)
 			{
@@ -735,11 +766,11 @@ public class GUI
 		    		  
 		    		  return;
 		    	  }
-			}	
+			}
+			
 		}
 	};
 	
-	// AI plays first and adds the correcr keyListeners and MouseListeners
 	public void running_AI()
 	{
 
@@ -747,13 +778,12 @@ public class GUI
 		circleArea.addMouseMotionListener(Mouseadapter);
 		circleArea.addMouseListener(MouseClicked);
 		
-		board.insertAI(3);	// play always first move in middle
+		board.insertAI(3);
 		writeHistory(movementsArray, 2, 3);
 		circleArea.setCircleColor(5, 3, Color.YELLOW);
 		circleArea.repaint();
 	}
 	
-	// if there is a winner remove Listeners to stop the game
 	public void winConditionHandle()
 	{
 		frame.removeKeyListener(keyListener);
@@ -770,21 +800,62 @@ public class GUI
 		circleArea.removeMouseMotionListener(Mouseadapter);
 	}	
 	
-//	// ActionListener for timer, to wait 3 seconds to replay each move for history
-//	ActionListener TimerActions = new ActionListener() 
+	
+	ActionListener TimerActions = new ActionListener() 
+    {
+    	private int currentIndex = 0; 
+
+        @Override
+        public void actionPerformed(ActionEvent e) 
+        {
+            if (!isReplaying) 
+            {
+                ((Timer) e.getSource()).stop();
+                return;
+            }
+        	
+            if (currentIndex < movementsArray.length()) 
+            {
+                JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
+                int player = jsonMovement.getInt("player");
+                int column = jsonMovement.getInt("column");
+
+                if (player == 1) {
+                    int c = board.insertPlayer(column);
+                    circleArea.setCircleColor(c, column, Color.RED);
+                } else if (player == 2) {
+                    int c = board.insertAI(column);
+                    circleArea.setCircleColor(c, column, Color.YELLOW);
+                }
+
+                circleArea.repaint();
+                panel.repaint();
+                frame.repaint();
+
+                currentIndex++;
+            } 
+            else 
+            {
+                ((Timer) e.getSource()).stop();
+                return;
+            }
+        }
+    };
+    
+//    ActionListener timerActions = new ActionListener() 
 //    {
 //    	private int currentIndex = 0; 
 //
 //        @Override
 //        public void actionPerformed(ActionEvent e) 
 //        {
-//            if (!isReplaying) 	
+//            if (!isReplaying) 
 //            {
 //                ((Timer) e.getSource()).stop();
 //                return;
 //            }
 //        	
-//            if (currentIndex < movementsArray.length()) 	// until the json finish
+//            if (currentIndex < movementsArray.length()) 
 //            {
 //                JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
 //                int player = jsonMovement.getInt("player");
@@ -810,20 +881,21 @@ public class GUI
 //                return;
 //            }
 //        }
-//    };	
+//    };
 	
-    // reads and shows the history from the JSON FILE
-	public void readHistory(String filename)		
+	
+	public void readHistory(String filename)		// reads and shows the history from the JSON FILE
 	{
 		try(FileReader fileReader = new FileReader(filename))
 		{
 			JSONTokener tokener = new JSONTokener(fileReader);
 			JSONObject jsonObject = new JSONObject(tokener);
-
+			
+            //String startTime = jsonObject.getString("start_time");
+            //System.out.println("Start Time: " + startTime);
 			
             JSONArray movementsArray = jsonObject.getJSONArray("movements");
 
-            // ActionListener for timer, to wait 3 seconds to replay each move for history
             Timer displayTimer = new Timer(3000, new ActionListener() 
             {
             	private int currentIndex = 0; 
@@ -831,13 +903,13 @@ public class GUI
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
-                    if (!isReplaying)  // if starts new game stop replaying the moves
+                    if (!isReplaying) 
                     {
                         ((Timer) e.getSource()).stop();
                         return;
                     }
                 	
-                    if (currentIndex < movementsArray.length()) 	// until the json finish
+                    if (currentIndex < movementsArray.length()) 
                     {
                         JSONObject jsonMovement = movementsArray.getJSONObject(currentIndex);
                         int player = jsonMovement.getInt("player");
@@ -891,6 +963,8 @@ public class GUI
             	displayTimer.stop();	
             	return;
             }
+            
+            //displayTimer.removeActionListener(TimerActions);
         } 
 		catch (IOException e3) 
 		{
@@ -905,8 +979,7 @@ public class GUI
 	    isReplaying = false;
 	}
 	
-	// not used cause of class history
-	public void writeHistory(JSONArray movementsArray , int player, int column)
+	public void writeHistory(JSONArray movementsArray ,int player, int column)
 	{		
 		movementsArray.put(new JSONObject().put("player", player).put("column", column));
 	}
